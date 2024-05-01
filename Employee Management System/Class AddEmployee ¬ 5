@@ -1,4 +1,4 @@
-package Employee.Management.System;
+package employee.management.system;
 
 import com.toedter.calendar.JDateChooser;
 
