@@ -183,29 +183,29 @@ public class UpdateEmployee extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-      if (e.getSource() == add){
-          String fname = tfname.getText();
-          String salary = tsalary.getText();
-          String address = taddress.getText();
-          String phone = tphone.getText();
-          String email = temail.getText();
-          String education = teducation.getText();
-          String designation = tdesignation.getText();
+        if (e.getSource() == add){
+            String fname = tfname.getText();
+            String salary = tsalary.getText();
+            String address = taddress.getText();
+            String phone = tphone.getText();
+            String email = temail.getText();
+            String education = teducation.getText();
+            String designation = tdesignation.getText();
 
-          try {
-              conn c = new conn();
-              String query = "update employee set fname = '"+fname+"', salary = '"+salary+"', address = '"+address+"', phone = '"+phone+"', email = '"+email+"', education = '"+education+"', designation = '"+designation+"' where empId = '"+number+"'";
-              c.statement.executeUpdate(query);
-              JOptionPane.showMessageDialog(null, "Details updated successfully");
-              setVisible(false);
-              new Main_class();
-          }catch (Exception E){
-              E.printStackTrace();
-          }
-      }else {
-          setVisible(false);
-          new View_Employee();
-      }
+            try {
+                conn c = new conn();
+                String query = "update employee set fname = '"+fname+"', salary = '"+salary+"', address = '"+address+"', phone = '"+phone+"', email = '"+email+"', education = '"+education+"', designation = '"+designation+"' where empId = '"+number+"'";
+                c.statement.executeUpdate(query);
+                JOptionPane.showMessageDialog(null, "Details updated successfully");
+                setVisible(false);
+                new Main_class();
+            }catch (Exception E){
+                E.printStackTrace();
+            }
+        }else {
+            setVisible(false);
+            new View_Employee();
+        }
     }
 
     public static void main(String[] args) {
