@@ -73,14 +73,16 @@ public class Login extends JFrame implements ActionListener {
                 String password = tpassword.getText();
 
                 conn conn = new conn();
-                String query = "select * from login where username = '"+ username +"' and password = '"+password+"'";
-                ResultSet resultSet = conn.statement.executeQuery(query);
-                if (resultSet.next()){
-                    setVisible(false);
-                    new Main_class();
-                }else {
-                    JOptionPane.showMessageDialog(null,"Invalid username or password");
+                String query = "select * from login where username = '" + username + "'";
+
+// Ensure that the statement object is not null before executing the query
+                if (conn.statement != null) {
+                    ResultSet resultSet = conn.statement.executeQuery(query);
+                    // Further processing of the resultSet...
+                } else {
+                    System.out.println("Statement is null");
                 }
+
 
             }catch (Exception E){
                 E.printStackTrace();
