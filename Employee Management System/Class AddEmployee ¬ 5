@@ -158,7 +158,7 @@ public class AddEmployee extends JFrame implements ActionListener {
 
         setSize(900,700);
         setLayout(null);
-        setLocation(300,50);
+        setLocation(195,4);
         setVisible(true);
     }
 
