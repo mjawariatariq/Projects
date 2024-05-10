@@ -67,33 +67,39 @@ public class Login extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == login){
-            try {
-                String username = tusername.getText();
-                String password = tpassword.getText();
-
-                conn conn = new conn();
-                String query = "select * from login where username = '" + username + "'";
-
-// Ensure that the statement object is not null before executing the query
-                if (conn.statement != null) {
-                    ResultSet resultSet = conn.statement.executeQuery(query);
-                    // Further processing of the resultSet...
-                } else {
-                    System.out.println("Statement is null");
-                }
-
-
-            }catch (Exception E){
-                E.printStackTrace();
+        if (e.getSource() == login) {
+            String username = tusername.getText();
+            String password = tpassword.getText();
+    
+            // Perform authentication
+            if (authenticate(username, password)) {
+                // If authentication is successful, close the login window
+                dispose(); // Close the login window
+                System.out.println("Login Successful!");
+                // Open the main application window
+                new Main_class(); // Create and open the Main_class window
+            } else {
+                // If authentication fails, display an error message
+                JOptionPane.showMessageDialog(this, "Invalid username or password. Please try again.");
+                // Exit the application
+                System.exit(0);
             }
-
         } else if (e.getSource() == back) {
-            System.exit(90);
+            // Handle the back button action
+            System.exit(0); // Exit the application
         }
     }
-
+    
+    
+    private boolean authenticate(String username, String password) {
+        // Perform the authentication logic here, such as querying the database
+        // You can use your database connection to check if the username and password match
+    
+        // For demonstration purposes, let's assume the authentication is successful if the username is "jawaria" and the password is "12345"
+        return username.equals("jawaria") && password.equals("12345");
+    }
+    
     public static void main(String[] args) {
         new Login();
     }
-}
+}    
