@@ -176,7 +176,7 @@ public class UpdateEmployee extends JFrame implements ActionListener {
 
         setSize(900,700);
         setLayout(null);
-        setLocation(300,50);
+        setLocation(190,5);
         setVisible(true);
 
     }
