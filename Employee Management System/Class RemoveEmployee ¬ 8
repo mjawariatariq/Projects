@@ -117,7 +117,7 @@ public class RemoveEmployee extends JFrame implements ActionListener {
         add(image);
 
         setSize(1000,400);
-        setLocation(300,150);
+        setLocation(170,150);
         setLayout(null);
         setVisible(true);
 
