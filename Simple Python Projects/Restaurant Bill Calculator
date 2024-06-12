@@ -1,0 +1,22 @@
+def calculate_bill(items, quantities, prices, discount_percent=0,
+tax_percent=0, split_bill=1):
+
+
+    if len(items) != len(quantities) or len(items) != len(prices):
+        raise ValueError("Mismatched lengths of items, quantities, and prices lists")
+    subtotal = sum(quantity * price for quantity, price in zip(quantities, prices))
+
+
+    discount_amount = subtotal * (discount_percent / 100)
+    discounted_total = subtotal - discount_amount
+    tax_amount = discounted_total * (tax_percent / 100)
+    total_with_tax = discounted_total + tax_amount
+    final_total = total_with_tax / split_bill
+    return final_total
+
+
+items = ["Burger", "Pizza", "Drink"]
+quantities = [2, 1, 3]
+prices = [5, 10, 2.5]
+total_amount = calculate_bill(items, quantities, prices, discount_percent=10, tax_percent=8, split_bill=2)
+print(f"Total amount: ${total_amount}")
