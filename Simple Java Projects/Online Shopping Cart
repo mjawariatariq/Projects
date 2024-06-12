@@ -1,0 +1,98 @@
+class Item {
+    private String productName;
+    private double price;
+    private int quantity;
+
+    public Item(String productName, double price, int quantity) {
+        this.productName = productName;
+        this.price = price;
+        this.quantity = quantity;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+}
+
+class ShoppingCart {
+    private Item[] cart;
+    private int itemCount;
+
+    public ShoppingCart(int maxItems) {
+        cart = new Item[maxItems];
+        itemCount = 0;
+    }
+
+    public void addItem(Item item) {
+        if (itemCount < cart.length) {
+            cart[itemCount] = item;
+            itemCount++;
+            System.out.println("Added " + item.getProductName() + " to the cart.");
+        } else {
+            System.out.println("Cart is full. Cannot add more items.");
+        }
+    }
+
+    public void updateQuantity(String productName, int newQuantity) {
+        for (int i = 0; i < itemCount; i++) {
+            if (cart[i].getProductName().equalsIgnoreCase(productName)) {
+                cart[i].quantity = newQuantity;
+                System.out.println("Updated quantity for " + productName);
+                return;
+            }
+        }
+        System.out.println("Item not found: " + productName);
+    }
+
+    public void removeItem(String productName) {
+        for (int i = 0; i < itemCount; i++) {
+            if (cart[i].getProductName().equalsIgnoreCase(productName)) {
+                System.out.println("Removed " + productName + " from the cart.");
+                cart[i] = cart[itemCount - 1];
+                itemCount--;
+                return;
+            }
+        }
+        System.out.println("Item not found: " + productName);
+    }
+
+    public double calculateTotalBill() {
+        double total = 0;
+        for (int i = 0; i < itemCount; i++) {
+            total += cart[i].getPrice() * cart[i].getQuantity();
+        }
+        return total;
+    }
+
+    public void printCartContents() {
+        System.out.println("Cart Contents:");
+        for (int i = 0; i < itemCount; i++) {
+            System.out.println(cart[i].getProductName() + " - Quantity: " + cart[i].getQuantity()
+                    + ", Price: $" + cart[i].getPrice());
+        }
+    }
+
+    public static void main(String[] args) {
+        ShoppingCart cart = new ShoppingCart(10);
+
+        Item item1 = new Item("T-shirt", 19.99, 2);
+        Item item2 = new Item("Jeans", 39.99, 1);
+
+        cart.addItem(item1);
+        cart.addItem(item2);
+
+        cart.updateQuantity("T-shirt", 3);
+        cart.removeItem("Jeans");
+
+        cart.printCartContents();
+        System.out.println("Total Bill: $" + cart.calculateTotalBill());
+    }
+}
