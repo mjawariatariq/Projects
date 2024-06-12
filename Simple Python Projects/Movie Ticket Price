@@ -1,0 +1,29 @@
+
+def calculate_ticket_price(age, day, num_tickets=1, is_group=False,
+is_family=False):
+
+    base_price = 0
+
+    if age == "adult":
+        base_price = 10
+    elif age == "child":
+        base_price = 5
+    elif age == "senior":
+        base_price = 8
+ 
+    if day.lower() in ["saturday", "sunday"]:
+        base_price += 2
+
+    if is_group:
+        base_price *= 0.9
+
+    elif is_family:
+        base_price *= 0.8  
+
+    total_price = base_price * num_tickets
+
+    return total_price
+ 
+total_price = calculate_ticket_price(age="adult", day="saturday", num_tickets=4, is_group=True)
+
+print(f"Total price for the group: ${total_price}")
