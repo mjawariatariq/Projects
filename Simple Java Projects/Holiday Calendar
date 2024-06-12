@@ -1,0 +1,21 @@
+
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
+public class HolidayCalendar {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter the year for which you want to see the holidays: ");
+        int year = scanner.nextInt();
+
+        Map<String, LocalDate> holidays = new HashMap<>();
+        holidays.put("New Year's Day", LocalDate.of(year, 1, 1));
+        holidays.put("Christmas", LocalDate.of(year, 12, 25));
+        // Add more holidays here
+
+        System.out.println("Major holidays for the year " + year + ":");
+        holidays.forEach((holiday, date) -> System.out.println(holiday + ": " + date));
+    }
+}
