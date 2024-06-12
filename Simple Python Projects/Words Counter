@@ -1,0 +1,28 @@
+
+sentence = ("I am Jawaria:")
+
+word_counts = {}  # This is an empty dictionary
+
+# Split the sentence into words
+
+words = sentence.split()
+
+# Loop over each word
+
+for word in words:
+
+    # If the word is already a key in the dictionary, increment its value
+
+    if word in word_counts:
+
+        word_counts[word] += 1
+
+    # If the word is not a key in the dictionary, add it with a value of 1
+
+    else:
+
+        word_counts[word] = 1
+
+# Print the dictionary
+
+print(word_counts)
