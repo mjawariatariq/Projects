@@ -1,0 +1,17 @@
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.Scanner;
+
+public class BirthdayCalculator {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter your birth date (yyyy-mm-dd): ");
+        String birthDateInput = scanner.nextLine();
+
+        LocalDate birthDate = LocalDate.parse(birthDateInput);
+        LocalDate currentDate = LocalDate.now();
+
+        int age = Period.between(birthDate, currentDate).getYears();
+        System.out.println("Your current age in years: " + age);
+    }
+}
