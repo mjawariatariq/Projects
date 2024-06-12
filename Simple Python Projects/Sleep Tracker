@@ -1,0 +1,17 @@
+bedtime = float(input("Enter your Bedtime: "))
+
+wakeup_time = float(input("Enter your Wakeup Time: "))
+
+total_sleep_duration = wakeup_time - bedtime
+
+if total_sleep_duration >= 7:
+
+print("You slept for", total_sleep_duration, "hours. That's a healthy amount of sleep!")
+
+elif total_sleep_duration < 7:
+
+print("You slept for", total_sleep_duration, "hours. You may need more sleep")
+
+else:
+
+    print("Something went wrong")
