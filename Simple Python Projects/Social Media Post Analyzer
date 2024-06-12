@@ -1,0 +1,57 @@
+import nltk
+from nltk.sentiment import SentimentIntensityAnalyzer
+from nltk.tokenize import word_tokenize
+from collections import Counter
+
+
+nltk.download('vader_lexicon')
+nltk.download('punkt')
+
+
+def is_emoji(char):
+    emoji_set = {'😊', '😃', '😢', '😠', '😐', '🙂', '😍', '🙁', '😂', '😎'}
+    return char in emoji_set
+
+
+def analyze_social_media_post(post):
+    words = word_tokenize(post)
+    sia = SentimentIntensityAnalyzer()
+
+   
+ sentiment_score = sia.polarity_scores(post)['compound']
+
+    if sentiment_score >= 0.05:
+        sentiment = "positive"
+    elif sentiment_score <= -0.05:
+        sentiment = "negative"
+    else:
+        sentiment = "neutral"
+
+
+       keywords = [word.lower() for word in words if word.isalnum()]
+       emojis = [char for char in post if is_emoji(char)]
+    emoji_counter = Counter(emojis)
+    trending_emojis = [emoji for emoji, count in emoji_counter.items() if count > 1]
+
+    return {
+        'sentiment': sentiment,
+        'keywords': keywords,
+        'emojis': emojis,
+        'trending_emojis': trending_emojis
+    }
+
+
+ def main():
+    social_media_post = input("Enter your social media post: ")
+    result = analyze_social_media_post(social_media_post)
+
+
+    print("\nAnalysis Result:")
+    print("Sentiment:", result['sentiment'])
+    print("Keywords:", ', '.join(result['keywords']))
+    print("Emojis:", ', '.join(result['emojis']))
+    print("Trending Emojis:", ', '.join(result['trending_emojis']))
+ 
+
+if __name__ == "__main__":
+    main()
