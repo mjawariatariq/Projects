@@ -1,0 +1,27 @@
+import time
+
+work_interval = 25 * 60  # 25 minutes in seconds
+
+break interval = 5 * 60   # 5 minutes in seconds
+
+while True:
+
+    print("Pomodoro Timer started!")
+
+    for _ in range(workL_interal):
+
+        time.sleep(1)  # Wait for 1 second
+
+        print("Work in progress", end='\r')
+
+    print("Time for a break!")
+
+    # Break interval
+
+    for _ in range(break_interval):
+
+        time.sleep(1)  # Wait for 1 second
+
+        print("Take a break", end='\r')
+
+    print(Pomodoro completed!")
