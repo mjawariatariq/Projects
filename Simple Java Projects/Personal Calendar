@@ -1,0 +1,93 @@
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
+public class PersonalCalendar {
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    private final Map<String, LocalDateTime> events = new HashMap<>();
+    private final Scanner scanner = new Scanner(System.in);
+
+    public void start() {
+        boolean running = true;
+        while (running) {
+            System.out.println("Personal Calendar Options:");
+            System.out.println("1. Add Event");
+            System.out.println("2. Edit Event");
+            System.out.println("3. Delete Event");
+            System.out.println("4. List Events");
+            System.out.println("5. Exit");
+            System.out.print("Choose an option: ");
+
+            int option = scanner.nextInt();
+            scanner.nextLine(); // consume newline
+
+            switch (option) {
+                case 1:
+                    addEvent();
+                    break;
+                case 2:
+                    editEvent();
+                    break;
+                case 3:
+                    deleteEvent();
+                    break;
+                case 4:
+                    listEvents();
+                    break;
+                case 5:
+                    running = false;
+                    break;
+                default:
+                    System.out.println("Invalid option. Please try again.");
+            }
+        }
+    }
+
+    private void addEvent() {
+        System.out.print("Enter event name: ");
+        String name = scanner.nextLine();
+        System.out.print("Enter event date and time (yyyy-MM-dd HH:mm): ");
+        LocalDateTime dateTime = LocalDateTime.parse(scanner.nextLine(), formatter);
+        events.put(name, dateTime);
+        System.out.println("Event added successfully.");
+    }
+
+    private void editEvent() {
+        System.out.print("Enter event name to edit: ");
+        String name = scanner.nextLine();
+        if (events.containsKey(name)) {
+            System.out.print("Enter new date and time (yyyy-MM-dd HH:mm): ");
+            LocalDateTime dateTime = LocalDateTime.parse(scanner.nextLine(), formatter);
+            events.put(name, dateTime);
+            System.out.println("Event updated successfully.");
+        } else {
+            System.out.println("Event not found.");
+        }
+    }
+
+    private void deleteEvent() {
+        System.out.print("Enter event name to delete: ");
+        String name = scanner.nextLine();
+        if (events.remove(name) != null) {
+            System.out.println("Event deleted successfully.");
+        } else {
+            System.out.println("Event not found.");
+        }
+    }
+
+    private void listEvents() {
+        if (events.isEmpty()) {
+            System.out.println("No events found.");
+        } else {
+            events.forEach((name, dateTime) ->
+                    System.out.println(name + " - " + dateTime.format(formatter)));
+        }
+    }
+
+    public static void main(String[] args) {
+        new PersonalCalendar().start();
+    }
+}
