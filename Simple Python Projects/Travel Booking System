@@ -1,0 +1,42 @@
+def find_cheapest_flight(destination, flexibility_days, budget, preferred_airlines):
+
+    flights = [
+        ("2024-07-10", "2024-07-24", "Garuda Indonesia", 1200),
+        ("2024-07-12", "2024-07-26", "Singapore Airlines", 1500),
+        ("2024-07-11", "2024-07-25", "AirAsia", 1000),
+        ("2024-07-13", "2024-07-27", "Lion Air", 1100)
+    ]
+
+
+    valid_flights = []
+
+    for departure_date, return_date, airline, price in flights:
+
+        if destination.lower() == "bali":
+
+            for i in range(-flexibility_days, flexibility_days + 1):
+                total_price = price
+                if total_price <= budget:
+                    valid_flights.append((departure_date, return_date, airline, total_price))
+
+
+    valid_flights.sort(key=lambda x: x[3])
+
+ 
+    preferred_flights = [flight for flight in valid_flights if flight[2] in preferred_airlines]
+
+ 
+    if preferred_flights:
+
+        print("Top 3 cheapest flight options:")
+
+        for i, flight in enumerate(preferred_flights[:3], 1):
+
+            print(f"{i}. Departure Date: {flight[0]}, Return Date: {flight[1]}, Airline: {flight[2]}, Price: ${flight[3]}")
+
+    else:
+
+        print("No flights available within the budget and preferences.")
+
+
+find_cheapest_flight("Bali", 3, 2000, ["Garuda Indonesia", "Singapore Airlines"])
