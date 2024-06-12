@@ -1,0 +1,31 @@
+expenses = {}
+
+def add_expense(category, amount):
+    if category in expenses:
+        expenses[category] += amount
+    else:
+        expenses[category] = amount
+
+def display_expenses():
+    print("Travel Expenses:")
+    for category, amount in expenses.items():
+        print(f"{category}: ${amount:.2f}")
+
+while True:
+    print("\nOptions:")
+    print("1. Add an expense")
+    print("2. Display expenses")
+    print("3. Quit")
+    choice = input("Enter your choice: ")
+
+    if choice == '1':
+        category = input("Enter expense category: ")
+        amount = float(input("Enter expense amount: "))
+        add_expense(category, amount)
+        print("Expense added successfully.")
+    elif choice == '2':
+        display_expenses()
+    elif choice == '3':
+        break
+    else:
+        print("Invalid choice. Please try again.")
