@@ -1,0 +1,23 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.Scanner;
+
+public class DateTimeValidation {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter a date and time (yyyy-MM-dd HH:mm): ");
+        String input = scanner.nextLine();
+
+        try {
+            LocalDateTime dateTime = LocalDateTime.parse(input, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+            if (dateTime.isAfter(LocalDateTime.now())) {
+                System.out.println("The date and time are valid and in the future.");
+            } else {
+                System.out.println("The date and time are not in the future.");
+            }
+        } catch (DateTimeParseException e) {
+            System.out.println("Invalid format. Please enter the date and time in the format yyyy-MM-dd HH:mm.");
+        }
+    }
+}
