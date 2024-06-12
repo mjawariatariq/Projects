@@ -1,0 +1,36 @@
+import java.util.Timer;
+import java.util.TimerTask;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Scanner;
+
+public class Reminder {
+    Timer timer;
+
+    public Reminder(String dateTime, String message) {
+        LocalDateTime reminderDateTime = LocalDateTime.parse(dateTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+        long delay = java.time.Duration.between(LocalDateTime.now(), reminderDateTime).toMillis();
+        timer = new Timer();
+        timer.schedule(new RemindTask(message), delay);
+    }
+
+    class RemindTask extends TimerTask {
+        String message;
+        public RemindTask(String message) {
+            this.message = message;
+        }
+        public void run() {
+            System.out.println(message);
+            timer.cancel(); //Terminate the timer thread
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter the date and time for the reminder (yyyy-MM-dd HH:mm): ");
+        String dateTime = scanner.nextLine();
+        System.out.println("Enter the reminder message: ");
+        String message = scanner.nextLine();
+        new Reminder(dateTime, message);
+    }
+}
