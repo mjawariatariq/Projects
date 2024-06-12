@@ -1,0 +1,28 @@
+Weight = float(input("Enter your Weight:"))
+
+level_of_hydration = input("Enter your Hydration Level:")
+
+if level_of_hydration == "light":
+
+    hydration_amount = Weight * 0.3
+
+    print(hydration_amount)
+
+elif level_of_hydration == "moderate":
+
+
+    hydration_amount = Weight * 0.5
+
+    print(hydration_amount)
+
+elif level_of_hydration == "intense":
+
+    hydration_amount = Weight * 0.7
+
+    print(hydration_amount)
+
+else:
+
+    print("Invalid Level")
+
+print("Stay Hyderated")
