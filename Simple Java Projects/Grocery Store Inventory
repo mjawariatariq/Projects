@@ -1,0 +1,82 @@
+
+import java.util.ArrayList;
+import java.util.List;
+
+class Product {
+    private String name;
+    private double price;
+    private int quantity;
+
+    public Product(String name, double price, int quantity) {
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+    }
+
+    public void displayDetails() {
+        System.out.println("Product: " + name);
+        System.out.println("Price: $" + price);
+        System.out.println("Quantity in stock: " + quantity);
+    }
+}
+
+class GroceryStore {
+    private List<Product> inventory;
+
+    public GroceryStore() {
+        inventory = new ArrayList<>();
+    }
+
+    public void addProduct(Product product) {
+        inventory.add(product);
+    }
+
+    public void sellProduct(String productName) {
+        for (Product product : inventory) {
+            if (product.getName().equalsIgnoreCase(productName)) {
+                if (product.getQuantity() > 0) {
+                    product.setQuantity(product.getQuantity() - 1);
+                    System.out.println("Sold 1 unit of " + productName);
+                } else {
+                    System.out.println(productName + " is out of stock.");
+                }
+                return;
+            }
+        }
+        System.out.println("Product not found: " + productName);
+    }
+
+    public void searchProduct(String productName) {
+        for (Product product : inventory) {
+            if (product.getName().equalsIgnoreCase(productName)) {
+                System.out.println("Product details for " + productName + ":");
+                System.out.println("Price: $" + product.getPrice());
+                System.out.println("Quantity in stock: " + product.getQuantity());
+                return;
+            }
+        }
+        System.out.println("Product not found: " + productName);
+    }
+
+    public void printInventoryReport() {
+        System.out.println("Inventory Report:");
+        for (Product product : inventory) {
+            System.out.println(product.getName() + " - Quantity: " + product.getQuantity());
+        }
+    }
+
+    public static void main(String[] args) {
+        GroceryStore store = new GroceryStore();
+
+        Product apple = new Product("Apple", 0.99, 50);
+        Product bread = new Product("Bread", 2.49, 30);
+
+        store.addProduct(apple);
+        store.addProduct(bread);
+
+        store.sellProduct("Apple");
+        store.searchProduct("Bread");
+
+        store.printInventoryReport();
+    }
+}
