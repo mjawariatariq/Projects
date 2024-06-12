@@ -1,0 +1,70 @@
+urgent_tasks = []
+important_tasks = []
+less_important_tasks = []
+
+while True:
+
+    print("To-Do List Manager")
+    print("1. Add Task")
+    print("2. View To-Do List")
+    print("3. Exit")
+
+    choice = input("Enter your choice (1, 2, or 3): ")
+
+    if choice == "1":
+
+        task = input("Enter task description: ")
+
+        priority = input("Enter task priority (urgent, important, or less important): ")
+
+        if priority.lower() == "urgent":
+
+            urgent_tasks.append(task)
+
+        elif priority.lower() == "important":
+
+            important_tasks.append(task)
+
+        elif priority.lower() == "less important":
+
+            less_important_tasks.append(task)
+
+        else:
+
+            print("Invalid priority. Task not added.")
+
+            continue
+
+        print("Task added successfully!")
+
+    elif choice == "2":
+
+        print("\n===== To-Do List =====")
+
+        print("Urgent Tasks:")
+
+        for task in urgent_tasks:
+
+            print("- ", task)
+
+        print("\nImportant Tasks:")
+
+        for task in important_tasks:
+
+            print("- ", task)
+
+        print("\nLess Important Tasks:")
+
+        for task in less_important_tasks:
+
+            print("- ", task)
+
+    elif choice == "3":
+
+        print("Exiting program. Goodbye!")
+
+        break
+
+    else:
+
+        print("Invalid choice. Please enter 1, 2, or 3.")
