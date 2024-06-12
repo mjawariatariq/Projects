@@ -1,0 +1,45 @@
+user_calendars = {
+    "User1": ["9:00-10:00", "12:00-13:00", "14:00-15:00"],
+    "User2": ["10:00-11:00", "13:00-14:00", "16:00-17:00"],
+    "User3": ["9:30-10:30", "11:00-12:00", "15:00-16:00"]
+}
+
+def find_meeting_time(calendars):
+
+    common_slots = []
+
+    for hour in range(9, 17):
+
+        slot = f"{hour}:00-{hour+1}:00"
+
+        available = True
+
+        for user, calendar in calendars.items():
+
+            if slot in calendar:
+
+                available = False
+
+                break
+
+        if available:
+
+            common_slots.append(slot)
+
+    return common_slots
+
+if __name__ == "__main__":
+
+    common_meeting_slots = find_meeting_time(user_calendars)
+
+    if common_meeting_slots:
+
+        print("Common meeting timee)
+
+        for slot in common_meeting_slots:
+
+            print(slot)
+
+    else:
+
+        print("No common meeting times found.")
