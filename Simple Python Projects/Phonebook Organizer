@@ -1,0 +1,42 @@
+phonebook = {}
+
+def add_contact(name, number):
+    phonebook[name] = number
+    print(f"Contact {name} added successfully.")
+
+def search_contact(name):
+    if name in phonebook:
+        print(f"Name: {name}, Number: {phonebook[name]}")
+    else:
+        print(f"Contact {name} not found in the phonebook.")
+
+def update_contact(name, number):
+    if name in phonebook:
+        phonebook[name] = number
+        print(f"Contact {name} updated successfully.")
+    else:
+        print(f"Contact {name} not found in the phonebook.")
+
+while True:
+    print("\nOptions:")
+    print("1. Add contact")
+    print("2. Search contact")
+    print("3. Update contact")
+    print("4. Quit")
+    choice = int(input("Enter your choice: "))
+
+    if choice == 1:
+        name = input("Enter contact name: ")
+        number = input("Enter contact number: ")
+        add_contact(name, number)
+    elif choice == 2:
+        name = input("Enter contact name: ")
+        search_contact(name)
+    elif choice == 3:
+        name = input("Enter contact name: ")
+        number = input("Enter new contact number: ")
+        update_contact(name, number)
+    elif choice == 4:
+        break
+    else:
+        print("Invalid choice. Please try again.")
