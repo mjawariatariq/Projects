@@ -1,0 +1,33 @@
+movie_ratings = {}
+
+def add_rating(movie, rating):
+    if movie in movie_ratings:
+        movie_ratings[movie].append(rating)
+    else:
+        movie_ratings[movie] = [rating]
+
+def average_rating(ratings):
+    return sum(ratings) / len(ratings)
+
+while True:
+    print("\nOptions:")
+    print("1. Add rating")
+    print("2. Display average rating")
+    print("3. Quit")
+    choice = int(input("Enter your choice: "))
+
+    if choice == 1:
+        movie = input("Enter movie title: ")
+        rating = float(input("Enter rating (1-5): "))
+        add_rating(movie, rating)
+    elif choice == 2:
+        movie = input("Enter movie title: ")
+        if movie in movie_ratings:
+            avg_rating = average_rating(movie_ratings[movie])
+            print(f"Average rating for {movie}: {avg_rating:.2f}")
+        else:
+            print("Movie not found in the database.")
+    elif choice == 3:
+        break
+    else:
+        print("Invalid choice. Please try again.")
