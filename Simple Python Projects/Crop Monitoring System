@@ -1,0 +1,9 @@
+def monitor_crop(temperature, humidity, rainfall):
+
+    if humidity < 50 and rainfall < 50:
+
+        return "Watering needed"
+
+    else:
+
+        return "Optimal conditions"
