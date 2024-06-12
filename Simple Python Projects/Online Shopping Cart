@@ -1,0 +1,21 @@
+def calculate_total_cost(item1_qty, item1_price, item2_qty, item2_price, item3_qty, item3_price):
+    total_cost = (item1_qty * item1_price) + (item2_qty * item2_price) + (item3_qty * item3_price)
+    
+    if 100 <= total_cost <= 200:
+        total_cost *= 0.95  # Apply a 5% discount
+    elif total_cost > 200:
+        total_cost *= 0.9  # Apply a 10% discount
+    
+    return total_cost
+
+item1_qty = int(input("Enter quantity for Item 1: "))
+item1_price = float(input("Enter price for Item 1: $"))
+
+item2_qty = int(input("Enter quantity for Item 2: "))
+item2_price = float(input("Enter price for Item 2: $"))
+
+item3_qty = int(input("Enter quantity for Item 3: "))
+item3_price = float(input("Enter price for Item 3: $"))
+
+total_cost = calculate_total_cost(item1_qty, item1_price, item2_qty, item2_price, item3_qty, item3_price)
+print(f"Total cost: ${total_cost:.2f}")
