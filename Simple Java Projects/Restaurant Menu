@@ -1,0 +1,77 @@
+
+import java.util.ArrayList;
+import java.util.List;
+
+class Dish {
+    private String name;
+    private String description;
+    private double price;
+
+    public Dish(String name, String description, double price) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+    }
+
+    // Getters and setters (optional, but recommended)
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+}
+
+class RestaurantMenu {
+    private List<Dish> dishes;
+
+    public RestaurantMenu() {
+        this.dishes = new ArrayList<>();
+    }
+
+    public void addDish(Dish dish) {
+        dishes.add(dish);
+    }
+
+    public void displayAllDishes() {
+        System.out.println("Menu:");
+        for (Dish dish : dishes) {
+            System.out.println(dish.getName() + " - $" + dish.getPrice());
+        }
+    }
+
+    public void searchDishByName(String dishName) {
+        for (Dish dish : dishes) {
+            if (dish.getName().equalsIgnoreCase(dishName)) {
+                System.out.println("Details for " + dish.getName() + ":");
+                System.out.println("Description: " + dish.getDescription());
+                System.out.println("Price: $" + dish.getPrice());
+                return;
+            }
+        }
+        System.out.println("Dish not found.");
+    }
+
+    // You can add more methods for categorization based on type (appetizer, main course, etc.)
+}
+
+public class Main {
+    public static void main(String[] args) {
+        RestaurantMenu menu = new RestaurantMenu();
+
+        // Example usage:
+        Dish pasta = new Dish("Pasta", "Delicious Italian dish", 12.99);
+        Dish burger = new Dish("Burger", "Classic beef burger", 9.49);
+
+        menu.addDish(pasta);
+        menu.addDish(burger);
+
+        menu.displayAllDishes();
+        menu.searchDishByName("Pasta");
+    }
+}
