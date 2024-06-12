@@ -1,0 +1,46 @@
+def add_item(inventory, name, quantity, price):
+
+
+    item = {"Name": name, "Quantity": quantity, "Price": price}
+
+
+    inventory.append(item)
+
+
+def print_inventory(inventory):
+
+
+    print("\nInventory:")
+
+
+    for item in inventory:
+
+
+        print(f"Name: {item['Name']}, Quantity: {item['Quantity']}, Price: ${item['Price']:.2f}")
+
+
+def calculate_total_value(inventory):
+    total_value = sum(item['Quantity'] * item['Price'] for item in inventory)
+
+
+    return total_value
+
+inventory_list = []
+
+
+add_item(inventory_list, "Item1", 10, 5.99)
+
+
+add_item(inventory_list, "Item2", 5, 12.50)
+
+
+add_item(inventory_list, "Item3", 8, 8.75)
+
+
+print_inventory(inventory_list)
+
+
+total_value = calculate_total_value(inventory_list)
+
+
+print(f"\nTotal Inventory Value: ${total_value:.2f}")
