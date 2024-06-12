@@ -1,0 +1,24 @@
+import java.util.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+public class DateDifference {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Enter the First Date (yyyy-MM-dd):");
+        String dateString1 = sc.nextLine();
+
+        System.out.println("Enter the Second Date (yyyy-MM-dd):");
+        String dateString2 = sc.nextLine();
+
+        LocalDate date1 = LocalDate.parse(dateString1, DateTimeFormatter.ISO_DATE);
+        LocalDate date2 = LocalDate.parse(dateString2, DateTimeFormatter.ISO_DATE);
+
+        long daysDifference = Math.abs(date1.until(date2).getDays());
+
+        System.out.println("Difference in Days: " + daysDifference);
+
+        sc.close();
+    }
+}
