@@ -1,0 +1,26 @@
+def estimate_travel_cost(destination, transportation_cost, accommodation_cost,
+activities_cost, travel_style="budget", duration=7):
+
+
+    daily_budget = {"budget": 50, "luxury": 200}
+
+ 
+    total_cost = (transportation_cost + accommodation_cost + activities_cost) * duration
+
+ 
+    total_cost *= daily_budget.get(travel_style, 1)
+
+
+    return total_cost
+destination = "Paris"
+transportation_cost = 500
+accommodation_cost = 800
+activities_cost = 300
+travel_style = "luxury"
+duration = 10
+
+ 
+total_travel_cost = estimate_travel_cost(destination, transportation_cost, accommodation_cost, activities_cost, travel_style, duration)
+
+
+print(f"The estimated travel cost for {duration} days in {destination} with a {travel_style} style is ${total_travel_cost}")
