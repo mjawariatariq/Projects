@@ -1,0 +1,28 @@
+age = int(input("Enter the Age:"))
+weight = float(input("Enter the Weight:"))
+activity_level = (input("Enter the your Activity Level:"))
+
+if age <= 18:
+
+calorie_goal = 3155 * weight
+
+elif age>25 or age>=30:
+
+calorie_goal = 2400 * weight
+
+elif age>=70:
+
+calorie_goal = 2200 * weight
+
+if activity_level == "Active":
+    calorie_goal*=1.7
+
+elif activity_level == "Normal":
+    calorie_goal*=1.5
+
+elif activity_level == "Low":
+calorie_goal*=1.2
+
+else:
+    print("Invalid activity level")
+print("Your Calorie Goal is:", calorie_goal)
