@@ -1,0 +1,37 @@
+menu = {}
+
+def read_menu(file_path):
+    with open(file_path, 'r') as file:
+        for line in file:
+            item, price, category = line.strip().split(',')
+            menu[item] = {'price': float(price), 'category': category}
+
+def browse_menu(category=None):
+    print("Menu:")
+    for item, details in menu.items():
+        if category is None or details['category'] == category:
+            print(f"{item}: ${details['price']} ({details['category']})")
+
+file_path = input("Enter path to menu file: ")
+read_menu(file_path)
+
+while True:
+    print("\nOptions:")
+    print("1. Browse menu")
+    print("2. Search for item")
+    print("3. Quit")
+    choice = int(input("Enter your choice: "))
+
+    if choice == 1:
+        category = input("Enter category to browse (leave blank to browse all): ")
+        browse_menu(category)
+    elif choice == 2:
+        item = input("Enter item to search for: ")
+        if item in menu:
+            print(f"{item}: ${menu[item]['price']} ({menu[item]['category']})")
+        else:
+            print("Item not found in the menu.")
+    elif choice == 3:
+        break
+    else:
+        print("Invalid choice. Please try again.")
