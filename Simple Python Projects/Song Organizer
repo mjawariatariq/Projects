@@ -1,0 +1,41 @@
+songs = {}
+
+def add_song(title, artist, genre):
+    songs[title] = {'artist': artist, 'genre': genre}
+    print(f"Song '{title}' added successfully.")
+
+def sort_songs(criteria):
+    sorted_songs = sorted(songs.items(), key=lambda x: x[1][criteria])
+    for title, details in sorted_songs:
+        print(f"{title}: Artist - {details['artist']}, Genre - {details['genre']}")
+
+while True:
+    print("\nOptions:")
+    print("1. Add song")
+    print("2. Sort songs")
+    print("3. Quit")
+    choice = int(input("Enter your choice: "))
+
+    if choice == 1:
+        title = input("Enter song title: ")
+        artist = input("Enter artist name: ")
+        genre = input("Enter genre: ")
+        add_song(title, artist, genre)
+    elif choice == 2:
+        print("\nSort by:")
+        print("1. Title")
+        print("2. Artist")
+        print("3. Genre")
+        criteria = int(input("Enter your choice: "))
+        if criteria == 1:
+            sort_songs('title')
+        elif criteria == 2:
+            sort_songs('artist')
+        elif criteria == 3:
+            sort_songs('genre')
+        else:
+            print("Invalid choice.")
+    elif choice == 3:
+        break
+    else:
+        print("Invalid choice. Please try again.")
