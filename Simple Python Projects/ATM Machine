@@ -1,0 +1,25 @@
+user_pin = int(input("Enter your ATM Pin:"))
+
+PIN = 1234
+
+if user_pin==PIN:
+
+print("Verifyed")
+
+else:
+
+print("Invalid PIN")
+
+exit()
+
+amount = int(input("Enter Amount:"))
+
+balance = 1000
+
+if amount<=balance:
+
+print("Withdraw Money")
+
+else:
+
+print("You have Insufficiant Balance")
