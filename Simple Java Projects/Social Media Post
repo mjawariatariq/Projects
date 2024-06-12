@@ -1,0 +1,89 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public class Post {
+    private String author;
+    private String content;
+    private int likes;
+
+    public Post(String author, String content) {
+        this.author = author;
+        this.content = content;
+        this.likes = 0;
+    }
+
+    public void displayDetails() {
+        System.out.println("Author: " + author);
+        System.out.println("Content: " + content);
+        System.out.println("Likes: " + likes);
+    }
+
+    public void incrementLikes() {
+        likes++;
+    }
+}
+
+
+public class SocialMediaPlatform {
+    private List<Post> posts;
+
+    public SocialMediaPlatform() {
+        posts = new ArrayList<>();
+    }
+
+    public void createPost(String author, String content) {
+        Post post = new Post(author, content);
+        posts.add(post);
+    }
+
+    public void likePost(String author, String content) {
+        for (Post post : posts) {
+            if (post.getAuthor().equalsIgnoreCase(author) && post.getContent().equals(content)) {
+                post.incrementLikes();
+                System.out.println(author + "'s post liked!");
+                return;
+            }
+        }
+        System.out.println("Post not found.");
+    }
+
+    public void searchPostsByUser(String author) {
+        System.out.println("Posts by " + author + ":");
+        for (Post post : posts) {
+            if (post.getAuthor().equalsIgnoreCase(author)) {
+                post.displayDetails();
+            }
+        }
+    }
+
+    public void displayMostLikedPost() {
+        Post mostLikedPost = null;
+        int maxLikes = Integer.MIN_VALUE;
+        for (Post post : posts) {
+            if (post.getLikes() > maxLikes) {
+                maxLikes = post.getLikes();
+                mostLikedPost = post;
+            }
+        }
+        if (mostLikedPost != null) {
+            System.out.println("Most liked post:");
+            mostLikedPost.displayDetails();
+        } else {
+            System.out.println("No posts available.");
+        }
+    }
+
+    public static void main(String[] args) {
+        SocialMediaPlatform platform = new SocialMediaPlatform();
+
+        platform.createPost("Alice", "Having a great day!");
+        platform.createPost("Bob", "Java programming is fun!");
+
+        platform.likePost("Alice", "Having a great day!");
+        platform.likePost("Bob", "Java programming is fun!");
+
+        platform.searchPostsByUser("Alice");
+
+        platform.displayMostLikedPost();
+    }
+}
