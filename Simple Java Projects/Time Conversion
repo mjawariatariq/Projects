@@ -1,0 +1,17 @@
+
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Scanner;
+
+public class TimeConversion {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter time in 24-hour format (HH:mm): ");
+        String timeInput = scanner.nextLine();
+
+        LocalTime time = LocalTime.parse(timeInput);
+        String convertedTime = time.format(DateTimeFormatter.ofPattern("h:mm a"));
+
+        System.out.println("Converted time in 12-hour format: " + convertedTime);
+    }
+}
