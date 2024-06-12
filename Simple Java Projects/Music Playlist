@@ -1,0 +1,78 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+public class Song {
+    private String title;
+    private String artist;
+    private String genre;
+
+    public Song(String title, String artist, String genre) {
+        this.title = title;
+        this.artist = artist;
+        this.genre = genre;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getArtist() {
+        return artist;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+}
+
+
+public class MusicPlayer {
+    private List<Song> playlist;
+    private Random random;
+
+    public MusicPlayer() {
+        playlist = new ArrayList<>();
+        random = new Random();
+    }
+
+    public void addSong(Song song) {
+        playlist.add(song);
+    }
+
+    public void removeSong(String title) {
+        playlist.removeIf(song -> song.getTitle().equalsIgnoreCase(title));
+    }
+
+    public void shufflePlaylist() {
+        for (int i = playlist.size() - 1; i > 0; i--) {
+            int j = random.nextInt(i + 1);
+            Song temp = playlist.get(i);
+            playlist.set(i, playlist.get(j));
+            playlist.set(j, temp);
+        }
+    }
+
+    public void playSongByTitle(String title) {
+        for (Song song : playlist) {
+            if (song.getTitle().equalsIgnoreCase(title)) {
+                System.out.println("Playing: " + song.getTitle() + " by " + song.getArtist());
+                return;
+            }
+        }
+        System.out.println("Song not found: " + title);
+    }
+
+    public static void main(String[] args) {
+        MusicPlayer player = new MusicPlayer();
+
+        Song song1 = new Song("Shape of You", "Ed Sheeran", "Pop");
+        Song song2 = new Song("Bohemian Rhapsody", "Queen", "Rock");
+
+        player.addSong(song1);
+        player.addSong(song2);
+
+        player.shufflePlaylist();
+        player.playSongByTitle("Shape of You");
+    }
+}
