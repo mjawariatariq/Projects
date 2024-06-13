@@ -1,0 +1,32 @@
+import random
+
+def collect_tweets(query):
+    # Simulating collection of tweets using random text
+    return [f"This is a tweet about {query}" for _ in range(100)]
+
+def analyze_sentiment(text_data):
+  sentiment_scores = []
+    for _ in text_data:
+        score = {"neg": random.random(), "neu": random.random(), "pos": random.random()}
+        sentiment_scores.append(score)
+    return sentiment_scores
+
+def generate_report(sentiment_scores):
+    # Simulating report generation by printing random scores
+    total_tweets = len(sentiment_scores)
+    average_score = {"pos": sum(score["pos"] for score in sentiment_scores) / total_tweets,
+                     "neg": sum(score["neg"] for score in sentiment_scores) / total_tweets,
+                     "neu": sum(score["neu"] for score in sentiment_scores) / total_tweets}
+
+    print("Sentiment Analysis Report:")
+    print(f"Total Tweets Analyzed: {total_tweets}")
+    print(f"Average Sentiment Score - Positive: {average_score['pos']}, Negative: {average_score['neg']}, Neutral: {average_score['neu']}")
+
+def main():
+    query = input("Enter topic or brand to analyze: ")
+    tweets = collect_tweets(query)
+    sentiment_scores = analyze_sentiment(tweets)
+    generate_report(sentiment_scores)
+
+if __name__ == "__main__":
+    main()
