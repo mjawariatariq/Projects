@@ -1,0 +1,45 @@
+import pygame
+
+def play_music(file_path):
+    pygame.mixer.init()
+    pygame.mixer.music.load(file_path)
+    pygame.mixer.music.play()
+
+def pause_music():
+    pygame.mixer.music.pause()
+
+def stop_music():
+    pygame.mixer.music.stop()
+
+def adjust_volume(volume):
+    pygame.mixer.music.set_volume(volume / 100.0)
+
+def main():
+    print("Simple Music Player")
+    file_path = input("Enter the path to your music file: ")
+
+    while True:
+        print("\n1. Play")
+        print("2. Pause")
+        print("3. Stop")
+        print("4. Adjust Volume")
+        print("5. Exit")
+        choice = input("Enter your choice: ")
+
+        if choice == '1':
+            play_music(file_path)
+        elif choice == '2':
+            pause_music()
+        elif choice == '3':
+            stop_music()
+        elif choice == '4':
+            volume = int(input("Enter volume (0-100): "))
+            adjust_volume(volume)
+        elif choice == '5':
+            print("Thank you for using the music player!")
+            break
+        else:
+            print("Invalid choice. Please select a valid option.")
+
+if __name__ == "__main__":
+    main()
