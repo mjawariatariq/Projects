@@ -1,0 +1,50 @@
+posts = {
+    1: {'author': 'Alice', 'content': 'Having a great day! #Sunshine'},
+    2: {'author': 'Bob', 'content': 'Just finished reading an interesting book.'},
+    # Add more posts here
+}
+
+likes = {}  # Dictionary to store post likes
+comments = {}  # Dictionary to store post comments
+
+def view_posts():
+    print("\nSocial Media Feed:")
+    for post_id, post in posts.items():
+        print(f"{post_id}. {post['author']}: {post['content']}")
+
+def like_post(post_id, user):
+    likes.setdefault(post_id, []).append(user)
+    print(f"{user} liked post {post_id}.")
+
+def comment_post(post_id, user, comment):
+    comments.setdefault(post_id, []).append((user, comment))
+    print(f"{user} commented on post {post_id}: {comment}")
+
+def main():
+    while True:
+        print("\nSocial Media")
+        print("1. View Posts")
+        print("2. Like Post")
+        print("3. Comment on Post")
+        print("4. Exit")
+        choice = input("Enter your choice: ")
+
+        if choice == '1':
+            view_posts()
+        elif choice == '2':
+            post_id = int(input("Enter post ID to like: "))
+            user = input("Enter your username: ")
+            like_post(post_id, user)
+        elif choice == '3':
+            post_id = int(input("Enter post ID to comment on: "))
+            user = input("Enter your username: ")
+            comment = input("Enter your comment: ")
+            comment_post(post_id, user, comment)
+        elif choice == '4':
+            print("Thank you for using the social media feed!")
+            break
+        else:
+            print("Invalid choice. Please select a valid option.")
+
+if __name__ == "__main__":
+    main()
