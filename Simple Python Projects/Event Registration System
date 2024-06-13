@@ -1,0 +1,36 @@
+registrations = []
+
+def register_participant():
+    name = input("Enter participant's name: ")
+    email = input("Enter participant's email: ")
+    additional_info = input("Enter any additional information (optional): ")
+
+    participant = {'name': name, 'email': email, 'additional_info': additional_info}
+    registrations.append(participant)
+    print(f"{name} has been registered!")
+
+def view_registrations():
+    print("\nRegistered Participants:")
+    for idx, participant in enumerate(registrations, start=1):
+        print(f"{idx}. Name: {participant['name']}, Email: {participant['email']}")
+
+def main():
+    while True:
+        print("\nEvent Registration System")
+        print("1. Register Participant")
+        print("2. View Registrations")
+        print("3. Exit")
+        choice = input("Enter your choice: ")
+
+        if choice == '1':
+            register_participant()
+        elif choice == '2':
+            view_registrations()
+        elif choice == '3':
+            print("Exiting. Thank you!")
+            break
+        else:
+            print("Invalid choice. Please select a valid option.")
+
+if __name__ == "__main__":
+    main()
