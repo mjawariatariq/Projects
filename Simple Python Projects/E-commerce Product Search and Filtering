@@ -1,0 +1,63 @@
+products = [
+    {"name": "Smartphone", "category": "Electronics", "brand": "Samsung", "price": 599.99},
+    {"name": "T-shirt", "category": "Clothing", "brand": "Nike", "price": 29.99},
+    {"name": "Book", "category": "Books", "brand": "Penguin", "price": 14.99}
+]
+
+def search_by_keyword(keyword):
+    results = [product for product in products if keyword.lower() in product["name"].lower()]
+    return results
+
+def filter_by_category(category, results):
+    filtered_results = [product for product in results if product["category"] == category]
+    return filtered_results
+
+def filter_by_price_range(min_price, max_price, results):
+    filtered_results = [product for product in results if min_price <= product["price"] <= max_price]
+    return filtered_results
+
+def main():
+    while True:
+        print("\nE-commerce Product Search")
+        print("1. Search by Keyword")
+        print("2. Filter by Category")
+        print("3. Filter by Price Range")
+        print("4. Exit")
+
+        choice = input("Enter your choice: ")
+
+        if choice == "1":
+            keyword = input("Enter keyword to search: ")
+            results = search_by_keyword(keyword)
+            print("Search Results:")
+            for product in results:
+                print(product)
+            continue
+
+        elif choice == "2":
+            category = input("Enter category to filter: ")
+            filtered_results = filter_by_category(category, products)
+            print("Filtered Results:")
+            for product in filtered_results:
+                print(product)
+            continue
+
+        elif choice == "3":
+            min_price = float(input("Enter minimum price: "))
+            max_price = float(input("Enter maximum price: "))
+            filtered_results = filter_by_price_range(min_price, max_price, products)
+            print("Filtered Results:")
+            for product in filtered_results:
+                print(product)
+            continue
+
+        elif choice == "4":
+            print("Exiting program. Goodbye!")
+            break
+
+        else:
+            print("Invalid choice. Please try again.")
+            continue
+
+if __name__ == "__main__":
+    main()
