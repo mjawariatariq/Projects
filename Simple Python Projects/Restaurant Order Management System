@@ -1,0 +1,54 @@
+def restaurant_wait_staff(customer_order):
+    customers = ["jawaria", "ayesha", "mama", "papa"]
+    menu = {
+        "biryani": 1000,
+        "pulao": 500,
+        "masala": 100
+    }
+    order = {}
+
+    specific_customer = input("Enter the name of a specific customer: ")
+
+    while True:
+        print("\nChoose an option:")
+        print("1. Add item to order")
+        print("2. Remove item from order")
+        print("3. Calculate total cost")
+        print("4. Exit")
+
+        choice = int(input("Enter your choice: "))
+
+        if choice == 1:
+            item = input("Enter the item (biryani, pulao, masala): ")
+            if item in menu:
+                quantity = int(input("Enter the quantity: "))
+                order[item] = order.get(item, 0) + quantity
+                print(f"{quantity} {item} added to the order.")
+            else:
+                print("Invalid item. Please choose from the menu.")
+        elif choice == 2:
+            item = input("Enter the item to remove: ")
+            if item in order:
+                quantity = int(input("Enter the quantity to remove: "))
+                if quantity >= order[item]:
+                    del order[item]
+                else:
+                    order[item] -= quantity
+                print(f"{quantity} {item} removed from the order.")
+            else:
+                print("Item not found in the order.")
+        elif choice == 3:
+            total_cost = sum(menu[item] * quantity for item, quantity in order.items())
+            print(f"Total cost: ${total_cost}")
+        elif choice == 4:
+            print("Exiting the program.")
+            break
+        else:
+            print("Invalid choice. Please select a valid option.")
+
+    if specific_customer in customers:
+        print("You are booked!")
+    else:
+        print("I can't find that customer.")
+
+restaurant_wait_staff("customer_order")
