@@ -1,0 +1,19 @@
+knowledge_base = {
+    "business hours": "Our business hours are Monday to Friday, 9:00 AM to 5:00 PM.",
+    "reset password": "You can reset your password on the login page.",
+    "technical issues": "Try restarting your device or clearing your browser cache. Contact support if the issue persists.",
+    "contact customer service": "You can reach us at 1-800-123-4567 or support@example.com."
+}
+
+def chatbot():
+    print("Hello! How can I help you today?")
+    while True:
+        user_input = input("You: ").lower()
+        if user_input == "exit":
+            print("Goodbye!")
+            break
+        response = knowledge_base.get(user_input, "I'm sorry, I don't understand that. Please contact customer service.")
+        print("Bot:", response)
+
+if __name__ == "__main__":
+    chatbot()
