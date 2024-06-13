@@ -1,0 +1,14 @@
+
+def weather_advice(temperature, precipitation):
+
+    if temperature > 25 and precipitation < 0.5:
+
+        return "It's hot and sunny! Don't forget to wear sunscreen. ☀️🧴"
+
+    elif precipitation >= 0.5:
+
+        return "It's raining! Remember to carry an umbrella. ☔️"
+
+    else:
+
+        return "It's cold outside! Make sure to dress warmly. 🧥🧣"
