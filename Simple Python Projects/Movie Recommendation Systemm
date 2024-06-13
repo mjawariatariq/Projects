@@ -1,0 +1,53 @@
+age = int(input("Enter your Age:"))
+genre = input("Enter your Genre Preference:")
+
+recommended_movies = {
+    "comedy": [
+        {"title": "Three Idiots", "genre": "hi", "release_year": 1999},
+        {"title": "Two Idiots", "genre": "hello", "release_year": 2000},
+        {"title": "One Idiots", "genre": "bye", "release_year": 2001}
+    ],
+    "action": [
+        {"title": "Idiots", "genre": "ja", "release_year": 2002},
+        {"title": "Thots", "genre": "ds", "release_year": 2009},
+        {"title": "Tots", "genre": "jd", "release_year": 3832}
+    ],
+    "drama": [
+        {"title": "Three Sdf", "genre": "sv", "release_year": 3452},
+        {"title": "Df Idiots", "genre": "fbg", "release_year": 4633},
+        {"title": "Three Dfvx", "genre": "fv", "release_year": 1943}
+    ]
+}
+
+
+if genre in recommended_movies:
+    print("Recommended movies for your genre:")
+    for movie in recommended_movies[genre]:
+        print(f"Title: {movie['title']}, Genre: {movie['genre']}, Release Year: {movie['release_year']}")
+else:
+    print("I can't understand your genre, but here are some popular movies for you:")
+
+
+    popular_movies = {
+        "comedy": [
+            {"title": "Three Idiots", "genre": "hi", "release_year": 1999},
+            {"title": "Two Idiots", "genre": "hello", "release_year": 2000},
+            {"title": "One Idiots", "genre": "bye", "release_year": 2001}
+        ],
+        "action": [
+            {"title": "Idiots", "genre": "ja", "release_year": 2002},
+            {"title": "Thots", "genre": "ds", "release_year": 2009},
+            {"title": "Tots", "genre": "jd", "release_year": 3832}
+        ],
+        "drama": [
+            {"title": "Three Sdf", "genre": "sv", "release_year": 3452},
+            {"title": "Df Idiots", "genre": "fbg", "release_year": 4633},
+            {"title": "Three Dfvx", "genre": "fv", "release_year": 1943}
+        ]
+    }
+
+
+    for genre, movies in popular_movies.items():
+        print(f"{genre.capitalize()} movies:")
+        for movie in movies:
+            print(f"Title: {movie['title']}, Genre: {movie['genre']}, Release Year: {movie['release_year']}")
