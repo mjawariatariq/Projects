@@ -1,0 +1,60 @@
+books = []
+users = []
+
+def add_book(title, author, isbn):
+    book = {'title': title, 'author': author, 'isbn': isbn, 'availability': True}
+    books.append(book)
+    print(f"'{title}' has been added to the library.")
+
+def register_user(name, user_id):
+    user = {'name': name, 'user_id': user_id, 'borrowed_books': []}
+    users.append(user)
+    print(f"{name} has been registered with User ID: {user_id}")
+
+def borrow_book(user_id, isbn):
+    user = next((user for user in users if user['user_id'] == user_id), None)
+    book = next((book for book in books if book['isbn'] == isbn and book['availability']), None)
+    if user and book:
+        user['borrowed_books'].append(book)
+        book['availability'] = False
+        print(f"{user['name']} has borrowed '{book['title']}'.")
+    elif not user:
+        print("User not found.")
+    else:
+        print("Book not available for borrowing.")
+
+def return_book(user_id, isbn):
+    user = next((user for user in users if user['user_id'] == user_id), None)
+    book = next((book for book in books if book['isbn'] == isbn), None)
+    if user and book in user['borrowed_books']:
+        user['borrowed_books'].remove(book)
+        book['availability'] = True
+        print(f"{user['name']} has returned '{book['title']}'.")
+    elif not user:
+        print("User not found.")
+    else:
+        print(f"{user['name']} did not borrow this book.")
+
+def show_books():
+    print("Books available in the library:")
+    for book in books:
+        print(f"Title: {book['title']}, Author: {book['author']}, ISBN: {book['isbn']}, Availability: {'Available' if book['availability'] else 'Not Available'}")
+
+
+def main():
+    add_book("Python Programming", "John Smith", "978-0134444321")
+    add_book("Introduction to Machine Learning", "Alice Johnson", "978-1785889622")
+
+    register_user("Alice", 101)
+    register_user("Bob", 102)
+
+    borrow_book(101, "978-0134444321")
+    borrow_book(102, "978-1785889622")
+    return_book(101, "978-0134444321")
+    return_book(102, "978-0134444321")
+
+    show_books()
+
+
+if __name__ == "__main__":
+    main()
