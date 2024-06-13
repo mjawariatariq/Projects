@@ -1,0 +1,20 @@
+def checkout(cart_total, membership_level):
+
+    if membership_level == "regular":
+
+        discount = 0.05
+
+    elif membership_level == "premium":
+
+        discount = 0.1
+
+    elif membership_level == "VIP":
+
+        discount = 0.15
+
+    else:
+        return "Invalid membership level."
+
+    discounted_total = cart_total - (cart_total * discount)
+
+    return f"Your total after applying the {membership_level} membership discount is ${discounted_total:.2f}."
