@@ -1,0 +1,27 @@
+
+def calculate_fare(distance, time_of_day):
+
+    base_fare = 2.5
+    fare_per_km = 1.5
+
+    if is_peak_hour(time_of_day):
+
+        fare = (base_fare + (fare_per_km * distance)) * 1.2
+
+    elif is_late_night(time_of_day):
+
+        fare = (base_fare + (fare_per_km * distance)) * 0.9
+
+    else:
+
+        fare = base_fare + (fare_per_km * distance)
+
+    return fare
+
+def is_peak_hour(time_of_day):
+
+    return (time_of_day >= 8 and time_of_day < 10) or (time_of_day >= 17 and time_of_day < 19)
+
+def is_late_night(time_of_day):
+
+    return time_of_day >= 22 or time_of_day < 5
