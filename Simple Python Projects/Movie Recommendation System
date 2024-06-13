@@ -1,0 +1,21 @@
+movies = {
+    "comedy": ["The Hangover", "Superbad", "Dumb and Dumber"],
+    "action": ["Die Hard", "The Dark Knight", "Indiana Jones"],
+    "drama": ["The Shawshank Redemption", "The Godfather", "Forrest Gump"]
+}
+
+
+favorite_genre = input("What is your favorite movie genre? (comedy, action, drama): ").lower()
+
+
+if favorite_genre in movies:
+
+    print("Here are some movies from the", favorite_genre, "genre:")
+
+    for movie in movies[favorite_genre]:
+
+        print("-", movie)
+
+else:
+
+    print("Sorry, we don't have recommendations for that genre.")
