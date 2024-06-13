@@ -1,0 +1,52 @@
+products = {}
+
+def display_products():
+    """Display available products."""
+    print("\nAvailable Products:")
+    for product, details in products.items():
+        print(f"{product.capitalize()} - Price: ${details['price']} | Quantity: {details['quantity']}")
+
+def add_to_cart(item, quantity):
+    """Add an item to the cart."""
+    if item in products and products[item]['quantity'] >= quantity:
+        products[item]['quantity'] -= quantity
+        print(f"{quantity} {item.capitalize()} added to your cart.")
+    else:
+        print(f"Sorry, {item.capitalize()} is not available or insufficient quantity.")
+
+def view_cart(cart):
+    """Display items in the cart."""
+    total_cost = 0
+    for item, quantity in cart.items():
+        price = products[item]['price']
+        cost = price * quantity
+        total_cost += cost
+        print(f"{quantity} {item.capitalize()} - ${cost:.2f}")
+    print(f"Total Cost: ${total_cost:.2f}")
+
+def main():
+    while True:
+        print("\nOnline Shop")
+        print("1. Display Available Products")
+        print("2. Add Item to Cart")
+        print("3. View Cart")
+        print("4. Exit")
+        choice = input("Enter your choice: ")
+
+        if choice == '1':
+            display_products()
+        elif choice == '2':
+            item = input("Enter the product name: ").lower()
+            quantity = int(input("Enter the quantity: "))
+            add_to_cart(item, quantity)
+        elif choice == '3':
+            cart = {'apple': 2, 'banana': 3}  # Example cart (you can modify this)
+            view_cart(cart)
+        elif choice == '4':
+            print("Thank you for shopping with us!")
+            break
+        else:
+            print("Invalid choice. Please select a valid option.")
+
+if __name__ == "__main__":
+    main()
