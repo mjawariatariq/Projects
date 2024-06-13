@@ -1,0 +1,12 @@
+def check_activity_goal(steps_taken, goal):
+
+    if steps_taken >= goal:
+
+        return "Goal achieved! 🎉"
+
+    else:
+
+        steps_remaining = goal - steps_taken
+
+        return f"You need {steps_remaining} more steps to reach your goal."
+️
