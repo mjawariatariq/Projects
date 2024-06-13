@@ -1,0 +1,28 @@
+def celsius_to_fahrenheit(celsius):
+    return celsius * 9/5 + 32
+
+def fahrenheit_to_celsius(fahrenheit):
+    return (fahrenheit - 32) * 5/9
+
+
+
+direction = input("Enter 'C' for Celsius to Fahrenheit, 'F' for Fahrenheit to Celsius: ").upper()
+
+temperature = float(input("Enter the temperature value: "))
+
+
+if direction == 'C':
+
+    converted_temp = celsius_to_fahrenheit(temperature)
+
+    print("Temperature in Fahrenheit:", converted_temp)
+
+elif direction == 'F':
+
+    converted_temp = fahrenheit_to_celsius(temperature)
+
+    print("Temperature in Celsius:", converted_temp)
+
+else:
+
+    print("Invalid direction.")
