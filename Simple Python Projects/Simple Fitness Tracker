@@ -1,0 +1,69 @@
+
+import datetime
+
+user_data = {
+    "daily_goals": {"steps": 10000, "distance": 5.0, "calories": 2000},
+    "activity_log": {}
+}
+
+def add_activity(date, steps, distance, calories):
+    user_data["activity_log"][date] = {"steps": steps, "distance": distance, "calories": calories}
+
+def generate_report(period):
+    end_date = datetime.date.today()
+    if period == "weekly":
+        start_date = end_date - datetime.timedelta(days=6)
+    elif period == "monthly":
+        start_date = end_date - datetime.timedelta(days=30)
+    else:
+        print("Invalid period. Please choose 'weekly' or 'monthly'.")
+        return
+
+    total_steps = 0
+    total_distance = 0.0
+    total_calories = 0
+
+    for date in sorted(user_data["activity_log"]):
+        if start_date <= date <= end_date:
+            activity = user_data["activity_log"][date]
+            total_steps += activity["steps"]
+            total_distance += activity["distance"]
+            total_calories += activity["calories"]
+
+    print(f"Total Steps: {total_steps}")
+    print(f"Total Distance: {total_distance} km")
+    print(f"Total Calories Burned: {total_calories} kcal")
+
+def main():
+    while True:
+        print("\nWearable Fitness Tracker")
+        print("1. Add Daily Activity Data")
+        print("2. Generate Report")
+        print("3. Exit")
+
+        choice = input("Enter your choice: ")
+
+        if choice == "1":
+            date = input("Enter date (YYYY-MM-DD): ")
+            steps = int(input("Enter number of steps: "))
+            distance = float(input("Enter distance walked (km): "))
+            calories = int(input("Enter calories burned: "))
+            add_activity(date, steps, distance, calories)
+            print("Activity data added successfully.")
+            continue
+
+        elif choice == "2":
+            period = input("Enter period for report (weekly/monthly): ")
+            generate_report(period)
+            continue
+
+        elif choice == "3":
+            print("Exiting program. Goodbye!")
+            break
+
+        else:
+            print("Invalid choice. Please try again.")
+            continue
+
+if __name__ == "__main__":
+    main()
