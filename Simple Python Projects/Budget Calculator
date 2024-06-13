@@ -1,0 +1,16 @@
+monthly_income = float(input("Enter your monthly income: "))
+monthly_expenses = float(input("Enter your monthly expenses: "))
+
+difference = monthly_income - monthly_expenses
+
+if difference > 0:
+
+  print("You can save ${:.2f} this month.".format(difference))
+
+elif difference < 0:
+
+    print("You are overspending by ${:.2f} this month.".format(abs(difference)))
+
+else:
+
+    print("You broke even this month. No savings or overspending.")
