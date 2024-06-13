@@ -1,0 +1,25 @@
+def reserve_book(book_title, student_status):
+
+    if book_available(book_title):
+
+        if student_status == "VIP":
+
+            return "Book reserved for you, VIP student!"
+
+        elif student_status == "regular":
+
+            return "Book reserved for you, regular student!:
+
+        else:
+
+            return "Invalid student status. Please enter 'VIP' or 'regular'."
+
+    else:
+
+        return "Sorry, the book is not available for reservation."
+
+
+def book_available(book_title):
+
+  
+    return False
