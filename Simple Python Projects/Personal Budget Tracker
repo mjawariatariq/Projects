@@ -1,0 +1,43 @@
+categories = {}  # Dictionary to store expense categories (category_name: [expenses])
+income = 0  # Initialize total income
+expenses = 0  # Initialize total expenses
+
+while True:
+    print("1. Set up expense categories")
+    print("2. Add income")
+    print("3. Add expense")
+    print("4. Generate reports")
+    print("5. Exit")
+    choice = input("Enter your choice: ")
+
+    if choice == "1":
+        category_name = input("Enter category name: ")
+        categories[category_name] = []
+
+    elif choice == "2":
+        income_amount = float(input("Enter income amount: "))
+        income += income_amount
+
+    elif choice == "3":
+        category_name = input("Enter category name: ")
+        expense_amount = float(input("Enter expense amount: "))
+        categories[category_name].append(expense_amount)
+        expenses += expense_amount
+
+    elif choice == "4":
+        period = input("Enter the period (e.g., monthly, weekly): ")
+        print(f"Total income: ${income:.2f}")
+        print(f"Total expenses: ${expenses:.2f}")
+
+        for category, category_expenses in categories.items():
+            category_total = sum(category_expenses)
+            print(f"{category} expenses: ${category_total:.2f}")
+        savings = income - expenses
+        print(f"Savings: ${savings:.2f}")
+
+    elif choice == "5":
+        print("Exiting the program.")
+        break
+
+    else:
+        print("Invalid choice. Please try again.")
