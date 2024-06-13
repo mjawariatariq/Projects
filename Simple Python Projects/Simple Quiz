@@ -1,0 +1,51 @@
+
+questions = [
+    "What is the capital of France?",
+    "Which planet is known as the Red Planet?",
+    "Who wrote the play 'Romeo and Juliet'?",
+    "What is the chemical symbol for water?",
+    "Which is the largest mammal on Earth?"
+]
+
+choices = [
+    ["A. Paris", "B. London", "C. Berlin"],
+    ["A. Venus", "B. Mars", "C. Jupiter"],
+    ["A. William Shakespeare", "B. Jane Austen", "C. Mark Twain"],
+    ["A. H2O", "B. CO2", "C. NaCl"],
+    ["A. Elephant", "B. Blue whale", "C. Giraffe"]
+]
+
+
+
+correct_answers = ["A", "B", "A", "A", "B"]
+
+
+score = 0
+
+for i in range(5):
+
+    print("Question", i+1, ":", questions[i])
+
+    for choice in choices[i]:
+
+        print(choice)
+
+    answer = input("Enter your answer (A, B, or C): ").upper()
+
+    if answer == correct_answers[i]:
+        score += 1
+
+
+print("Your score:", score, "out of 5.")
+
+if score == 5:
+
+    print("Congratulations! You got all the answers correct!")
+
+elif score >= 3:
+
+    print("Well done! You did a good job.")
+
+else:
+
+    print("You need to study more. Keep practicing!")
