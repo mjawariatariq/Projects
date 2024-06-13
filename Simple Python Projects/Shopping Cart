@@ -1,0 +1,38 @@
+cart = {}
+
+while True:
+
+    print("\n1. Add item to cart")
+    print("2. Remove item from cart")
+    print("3. View cart")
+    print("4. Exit")
+
+    choice = input("Enter your choice: ")
+
+    if choice == '1':
+        product_name = input("Enter product name: ")
+        price = float(input("Enter price: "))
+        cart[product_name] = price
+
+    elif choice == '2':
+        product_name = input("Enter product name to remove: ")
+        if product_name in cart:
+            del cart[product_name]
+        else:
+            print("Product not found in the cart.")
+
+    elif choice == '3':
+        total_cost = sum(cart.values())
+        if total_cost > 0:
+            print("Items in your cart:")
+            for product_name, price in cart.items():
+                print(f"{product_name}: ${price}")
+            print(f"Total cost: ${total_cost}")
+        else:
+            print("Your cart is empty.")
+
+    elif choice == '4':
+        print("Thank you for shopping with us!")
+        break
+    else:
+        print("Invalid choice. Please try again.")
