@@ -1,0 +1,37 @@
+flights = {}
+
+def add_flight():
+    flight_code = input("Enter flight code: ")
+    airline = input("Enter airline name: ")
+    departure_time = input("Enter departure time (HH:MM): ")
+    arrival_time = input("Enter arrival time (HH:MM): ")
+    price = float(input("Enter ticket price: "))
+
+    flights[flight_code] = {'airline': airline, 'departure': departure_time, 'arrival': arrival_time, 'price': price}
+    print(f"Flight {flight_code} added successfully!")
+
+def display_flights():
+    print("\nAvailable Flights:")
+    for code, details in flights.items():
+        print(f"{code}: {details['airline']} | Departure: {details['departure']} | Arrival: {details['arrival']} | Price: ${details['price']:.2f}")
+
+def main():
+    while True:
+        print("\nFlight Booking System")
+        print("1. Add New Flight")
+        print("2. Display Flights")
+        print("3. Exit")
+        choice = input("Enter your choice: ")
+
+        if choice == '1':
+            add_flight()
+        elif choice == '2':
+            display_flights()
+        elif choice == '3':
+            print("Thank you for using the flight booking system!")
+            break
+        else:
+            print("Invalid choice. Please select a valid option.")
+
+if __name__ == "__main__":
+    main()
