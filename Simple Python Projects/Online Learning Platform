@@ -1,0 +1,97 @@
+users = {}
+courses = {}
+
+def register_user(username, password):
+    if username in users:
+        print("Username already exists. Please choose another one.")
+    else:
+        users[username] = {"password": password, "enrolled_courses": []}
+        print("User registered successfully.")
+
+def login_user(username, password):
+    if username not in users or users[username]["password"] != password:
+        print("Invalid username or password.")
+        return None
+    else:
+        print("Login successful.")
+        return username
+
+def display_courses():
+    print("Available Courses:")
+    for course_id, course_info in courses.items():
+        print(f"{course_id}: {course_info['title']} - {course_info['instructor']}")
+
+def enroll_course(username, course_id):
+    if username not in users:
+        print("User not found.")
+    elif course_id not in courses:
+        print("Course not found.")
+    else:
+        users[username]["enrolled_courses"].append(course_id)
+        print("Enrolled in the course successfully.")
+
+def access_course_materials(username, course_id):
+    if username not in users:
+        print("User not found.")
+    elif course_id not in courses:
+        print("Course not found.")
+    elif course_id not in users[username]["enrolled_courses"]:
+        print("You are not enrolled in this course.")
+    else:
+        print("Accessing course materials for course:", courses[course_id]["title"])
+
+def submit_assignment(username, course_id, assignment):
+    if username not in users:
+        print("User not found.")
+    elif course_id not in courses:
+        print("Course not found.")
+    elif course_id not in users[username]["enrolled_courses"]:
+        print("You are not enrolled in this course.")
+    else:
+        print("Submitting assignment for course:", courses[course_id]["title"])
+
+
+def main():
+    while True:
+        print("\nOnline Learning Platform")
+        print("1. Register")
+        print("2. Login")
+        print("3. Display Courses")
+        print("4. Enroll in Course")
+        print("5. Access Course Materials")
+        print("6. Submit Assignment")
+        print("7. Exit")
+
+        choice = input("Enter your choice: ")
+
+        if choice == "1":
+            username = input("Enter username: ")
+            password = input("Enter password: ")
+            register_user(username, password)
+        elif choice == "2":
+            username = input("Enter username: ")
+            password = input("Enter password: ")
+            login_user(username, password)
+        elif choice == "3":
+            display_courses()
+        elif choice == "4":
+            username = input("Enter username: ")
+            course_id = input("Enter course ID to enroll: ")
+            enroll_course(username, course_id)
+        elif choice == "5":
+            username = input("Enter username: ")
+            course_id = input("Enter course ID to access materials: ")
+            access_course_materials(username, course_id)
+        elif choice == "6":
+            username = input("Enter username: ")
+            course_id = input("Enter course ID to submit assignment: ")
+            assignment = input("Enter assignment details: ")
+            submit_assignment(username, course_id, assignment)
+        elif choice == "7":
+            print("Exiting program. Goodbye!")
+            break
+        else:
+            print("Invalid choice. Please try again.")
+
+if __name__ == "__main__":
+    main()
