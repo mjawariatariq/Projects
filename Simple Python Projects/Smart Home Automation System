@@ -1,0 +1,88 @@
+import speech_recognition as sr
+import pyttsx3
+
+light = "off"
+brightness = 50
+light_temperature = "warm"
+room_temperature = 35
+locking_doors = "unlock"
+
+def speak(text):
+    engine = pyttsx3.init()
+    engine.say(text)
+    engine.runAndWait()
+
+def adjust_light(action):
+    global light
+    light = action
+    speak("Light is " + action)
+
+def adjust_brightness(level):
+    global brightness
+    brightness = level
+    if brightness == 50:
+        speak("Average brightness")
+    elif brightness < 50:
+        speak("Increase brightness")
+    else:
+        speak("Brightness is too high")
+
+def adjust_light_temperature(temperature):
+    global light_temperature
+    light_temperature = temperature
+    speak("Light temperature is " + temperature)
+
+def adjust_room_temperature(temperature):
+    global room_temperature
+    room_temperature = temperature
+    if room_temperature <= 25:
+        speak("Perfect Room Temperature")
+    else:
+        speak("Room temperature is too high")
+
+def adjust_locking_doors(status):
+    global locking_doors
+    locking_doors = status
+    if locking_doors == "lock":
+        speak("Door is Locked")
+    elif locking_doors == "unlock":
+        speak("Door is Unlocked")
+    else:
+        speak("Invalid input for door status")
+
+while True:
+    print("\n1. Adjust Light (on/off)")
+    print("2. Adjust Brightness")
+    print("3. Adjust Light Temperature")
+    print("4. Adjust Room Temperature")
+    print("5. Adjust Locking Doors (lock/unlock)")
+    print("6. Exit the program")
+
+    choice = int(input("Enter your Choice: "))
+
+    if choice == 1:
+        action = input("Enter Light (on/off): ")
+        adjust_light(action)
+
+    elif choice == 2:
+        level = int(input("Enter Brightness level: "))
+        adjust_brightness(level)
+
+    elif choice == 3:
+        temperature = input("Enter Light Temperature (warm/cold): ")
+        adjust_light_temperature(temperature)
+
+    elif choice == 4:
+        temperature = int(input("Enter Room temperature: "))
+        adjust_room_temperature(temperature)
+
+    elif choice == 5:
+        status = input("Enter lock situation (lock/unlock): ")
+        adjust_locking_doors(status)
+
+    elif choice == 6:
+        print("Exiting the smart home control system.")
+        break
+
+    else:
+        print("Invalid choice. Please try again.")
