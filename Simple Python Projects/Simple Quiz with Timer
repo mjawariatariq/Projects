@@ -1,0 +1,52 @@
+
+questions = [
+    {
+        'question': 'What is the capital of France?',
+        'options': ['Paris', 'London', 'Berlin'],
+        'answer': 'Paris'
+    },
+    {
+        'question': 'Which planet is known as the Red Planet?',
+        'options': ['Mars', 'Venus', 'Jupiter'],
+        'answer': 'Mars'
+    },
+    # Add more questions here
+]
+
+def ask_question(question):
+    print(question['question'])
+    for i, option in enumerate(question['options'], start=1):
+        print(f"{i}. {option}")
+    user_answer = input("Your choice (1, 2, 3): ")
+    return question['options'][int(user_answer) - 1]
+
+def main():
+    score = 0
+    total_questions = len(questions)
+    time_limit = 10  # Set the time limit for each question (in seconds)
+
+    print("Welcome to the Timed Quiz!")
+    for q in questions:
+        print("\n" + "=" * 30)
+        print(f"Time remaining: {time_limit} seconds")
+        user_choice = ask_question(q)
+
+        # Start the timer
+        start_time = time.time()
+
+        # Wait for user input or until time runs out
+        while True:
+            elapsed_time = time.time() - start_time
+            if elapsed_time >= time_limit:
+                print("\nTime's up!")
+                break
+            if input() == user_choice:
+                print("\nCorrect!")
+                score += 1
+                break
+
+    print("\n" + "=" * 30)
+    print(f"Quiz completed! Your score: {score}/{total_questions}")
+
+if __name__ == "__main__":
+    main()
