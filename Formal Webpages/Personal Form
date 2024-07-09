@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form</title>
+</head>
+
+<body>
+    <fieldset>
+        <legend>Enquiry</legend>
+        <form>
+            Name: <input type="text" placeholder="Enter your Name" required="" autofocus="" />
+            <br> <br>
+            Address: <textarea> </textarea>
+            <br><br>
+            Gender: <input type="radio" value="m" name="Gender"> Male
+            <input type="radio" value="f" name="Gender"> Female
+            <br><br>
+            Country: <select>
+                <optgroup label="Asia">
+                    <option value="Pakistan">Pakistan</option>
+                    <option value="china">china</option>
+                </optgroup>
+                <option value="select Country">Select Country</option>
+                <option> Pakistan</option>
+                <option> USA</option>
+                <option> Japan</option>
+            </select>
+            <br><br>
+            Hobies:
+            <input type="checkbox"> Singing
+            <input type="checkbox"> Reciting
+            <input type="checkbox"> Reading
+            <input type="checkbox"> Others
+            <br><br>
+            Image:
+            <input type="file">
+            <Image>
+                <br><br>
+                Email:
+                <input type="email">
+                <email>
+                    <br><br>
+                    Password:
+                    <input type="password">
+                    <password>
+                        <br><br>
+                        Age:
+                        <input type="number">
+                        <Age>
+                            Phone Number:
+                            <input type="number">
+                            <number>
+                                <br><br>
+                                Date:
+                                <input type="date">
+                                <date>
+                                    <br><br>
+
+                                    <input type="submit">
+                                    <input type="reset">
+                                    <br><br>
+
+        </form>
+    </fieldset>
+</body>
+
+</html>
