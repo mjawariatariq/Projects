@@ -6,64 +6,104 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Main_class extends JFrame {
-    Main_class(){
+    
+    Main_class() {
 
+        // Set up the main frame
+        setSize(1120, 630);
+        setLocation(250, 100);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(null);
+
+        // Background image
         ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("icons/home.jpg"));
-        Image i2 = i1.getImage().getScaledInstance(1120,630,Image.SCALE_DEFAULT);
+        Image i2 = i1.getImage().getScaledInstance(1120, 630, Image.SCALE_DEFAULT);
         ImageIcon i3 = new ImageIcon(i2);
         JLabel img = new JLabel(i3);
-        img.setBounds(0,0,1120,630);
+        img.setBounds(0, 0, 1120, 630);
         add(img);
 
+        // Heading
         JLabel heading = new JLabel("Employee Management System");
-        heading.setBounds(340,155,400,40);
-        heading.setFont(new Font("Raleway",Font.BOLD,25));
+        heading.setBounds(340, 155, 400, 40);
+        heading.setFont(new Font("Raleway", Font.BOLD, 25));
         img.add(heading);
 
+        // Buttons
         JButton add = new JButton("Add Employee");
-        add.setBounds(335,270,150,40);
+        add.setBounds(230, 270, 150, 40);
         add.setForeground(Color.WHITE);
         add.setBackground(Color.black);
-        add.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new AddEmployee();
-                setVisible(false);
-            }
-        });
         img.add(add);
 
         JButton view = new JButton("View Employee");
-        view.setBounds(565,270,150,40);
+        view.setBounds(440, 270, 150, 40);
         view.setForeground(Color.WHITE);
         view.setBackground(Color.black);
+        img.add(view);
+
+        JButton update = new JButton("Update Employee");
+        update.setBounds(650, 270, 150, 40);
+        update.setForeground(Color.WHITE);
+        update.setBackground(Color.black);
+        img.add(update);
+
+        JButton rem = new JButton("Remove Employee");
+        rem.setBounds(335, 370, 150, 40);
+        rem.setForeground(Color.WHITE);
+        rem.setBackground(Color.black);
+        img.add(rem);
+
+        JButton attendance = new JButton("Attendance");
+        attendance.setBounds(545, 370, 150, 40);
+        attendance.setForeground(Color.WHITE);
+        attendance.setBackground(Color.black);
+        img.add(attendance);
+
+        // Action listeners for buttons
+        add.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new AddEmployee();  // Opens the AddEmployee window
+                setVisible(false);  // Hides the main window
+            }
+        });
+
         view.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new View_Employee();
-                setVisible(false);
+                new View_Employee();  // Opens the View_Employee window
+                setVisible(false);    // Hides the main window
             }
         });
-        img.add(view);
 
-        JButton rem = new JButton("Remove Employee");
-        rem.setBounds(440,370,150,40);
-        rem.setForeground(Color.WHITE);
-        rem.setBackground(Color.black);
+        update.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new UpdateEmployee();  // Opens the UpdateEmployee window
+                setVisible(false);     // Hides the main window
+            }
+        });
+        
         rem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new RemoveEmployee();
+                new RemoveEmployee();  // Opens the RemoveEmployee window
+                setVisible(false);     // Hides the main window
             }
         });
-        img.add(rem);
 
-        setSize(1120,630);
-        setLocation(250,100);
-        setLayout(null);
+        attendance.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new AttendanceManagement();  // Opens the AttendanceManagement window
+                setVisible(false);           // Hides the main window
+            }
+        });
+
         setVisible(true);
-
     }
+
     public static void main(String[] args) {
         new Main_class();
     }
