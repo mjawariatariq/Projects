@@ -1,19 +1,32 @@
-create database IF NOT EXISTS employeemanagement;
-use employeemanagement;
-create table if NOT EXISTS login (username varchar(20), password varchar(20));
-insert into login values('jawaria', '12345');
-
-create table if NOT EXISTS employee (
-    name varchar(40), 
-    fname varchar(40), 
-    dob varchar(40), 
-    salary varchar(30), 
-    address varchar(20), 
-    phone varchar(40), 
-    email varchar(40), 
-    education varchar(40), 
-    designation varchar(40)
+CREATE TABLE IF NOT EXISTS login (
+    username VARCHAR(20),
+    password VARCHAR(20)
 );
-insert into employee values('Jawaria', 'Tariq', '2006-03-27', '60000', 'Nawabshah', '123456789', 'mjawariatariq@gmail.com', 'BSC', 'AI Engineer');
 
-select * from employee;
+INSERT INTO login (username, password) VALUES ('jawaria', '12345');
+CREATE TABLE IF NOT EXISTS employee (
+    name VARCHAR(40),
+    father VARCHAR(40),
+    dob DATE,
+    salary DECIMAL(10, 2),
+    address VARCHAR(100),
+    phone VARCHAR(15),
+    email VARCHAR(50),
+    education VARCHAR(50),
+    designation VARCHAR(50),
+    addhar VARCHAR(20),
+    empID VARCHAR(20)
+);
+
+INSERT INTO employee (name, father, dob, salary, address, phone, email, education, designation, addhar, empID)
+VALUES ('John', 'Doe', '1980-01-01', 50000.00, '123 Elm Street', '555-1234', 'john.doe@example.com', 'MBA', 'Manager', '123456789012', 'EMP001');
+
+CREATE TABLE IF NOT EXISTS attendance (
+    empId VARCHAR(20),
+    date DATE,
+    status VARCHAR(10),
+    `leave` VARCHAR(10),
+    leaveDate DATE
+);
+INSERT INTO attendance (empId, date, status, `leave`, leaveDate)
+VALUES ('EMP001', '2024-08-09', 'Present', 'No', NULL);
