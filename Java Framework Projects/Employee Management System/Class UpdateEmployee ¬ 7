@@ -1,214 +1,222 @@
 package employee.management.system;
 
-import com.sun.tools.javac.Main;
 import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
+import javax.swing.text.JTextComponent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 
 public class UpdateEmployee extends JFrame implements ActionListener {
-    JTextField teducation, tfname, taddress,tphone, taadhar, temail, tsalary,tdesignation;
-    JLabel tempid;
-    JButton add,back;
+    JTextField taddress, tphone, taadhar, temail, tsalary, tdesignation, tempid;
+    JLabel tfatherName, tdob;
+    JButton update, back;
     String number;
-    UpdateEmployee(String number){
+    JDateChooser tdobChooser;
+    private JComboBox<String> Boxeducation;
+    private JTextComponent tname;
 
+    UpdateEmployee(String number) {
         this.number = number;
-        getContentPane().setBackground(new Color(163,255,188));
+        getContentPane().setBackground(new Color(163, 255, 188));
+        setLayout(null);
 
-        JLabel heading = new JLabel("Add Employee Detail");
-        heading.setBounds(320,30,500,50);
-        heading.setFont(new Font("serif", Font.BOLD,25));
+        JLabel heading = new JLabel("Update Employee Detail");
+        heading.setBounds(320, 30, 500, 50);
+        heading.setFont(new Font("serif", Font.BOLD, 25));
         add(heading);
 
         JLabel name = new JLabel("Name");
-        name.setBounds(50,150,150,30);
-        name.setFont(new Font("SAN_SERIF", Font.BOLD,20));
+        name.setBounds(50, 150, 150, 30);
+        name.setFont(new Font("SAN_SERIF", Font.BOLD, 20));
         add(name);
 
-        JLabel tname = new JLabel();
-        tname.setBounds(200,150,150,30);
-        tname.setBackground(new Color(177,252,197));
-        add(tname);
+        // Removed the name text field
 
-        JLabel fname = new JLabel("Father's Name");
-        fname.setBounds(400,150,150,30);
-        fname.setFont(new Font("SAN_SERIF", Font.BOLD,20));
-        add(fname);
+        JLabel fatherNameLabel = new JLabel("Father's Name");
+        fatherNameLabel.setBounds(400, 150, 150, 30);
+        fatherNameLabel.setFont(new Font("SAN_SERIF", Font.BOLD, 20));
+        add(fatherNameLabel);
 
-        tfname = new JTextField();
-        tfname.setBounds(600,150,150,30);
-        tfname.setBackground(new Color(177,252,197));
-        add(tfname);
+        tfatherName = new JLabel(); // Changed to JLabel for display only
+        tfatherName.setBounds(600, 150, 150, 30);
+        tfatherName.setFont(new Font("SAN_SERIF", Font.BOLD, 20));
+        tfatherName.setBackground(new Color(177, 252, 197));
+        add(tfatherName);
 
-        JLabel dob = new JLabel("Date Of Birth");
-        dob.setBounds(50,200,150,30);
-        dob.setFont(new Font("SAN_SERIF", Font.BOLD,20));
-        add(dob);
+        JLabel dobLabel = new JLabel("Date Of Birth");
+        dobLabel.setBounds(50, 200, 150, 30);
+        dobLabel.setFont(new Font("SAN_SERIF", Font.BOLD, 20));
+        add(dobLabel);
 
-        JLabel tdob = new JLabel();
-        tdob.setBounds(200,200,150,30);
-        tdob.setFont(new Font("Tahoma", Font.BOLD, 20));
-        add(tdob);
+        tdobChooser = new JDateChooser();
+        tdobChooser.setBounds(200, 200, 150, 30);
+        tdobChooser.setBackground(new Color(177, 252, 197));
+        add(tdobChooser);
 
-        JLabel salary = new JLabel("Salary");
-        salary.setBounds(400,200,150,30);
-        salary.setFont(new Font("SAN_SERIF", Font.BOLD,20));
-        add(salary);
+        JLabel salaryLabel = new JLabel("Salary");
+        salaryLabel.setBounds(400, 200, 150, 30);
+        salaryLabel.setFont(new Font("SAN_SERIF", Font.BOLD, 20));
+        add(salaryLabel);
 
         tsalary = new JTextField();
-        tsalary.setBounds(600,200,150,30);
-        tsalary.setBackground(new Color(177,252,197));
+        tsalary.setBounds(600, 200, 150, 30);
+        tsalary.setBackground(new Color(177, 252, 197));
         add(tsalary);
 
-        JLabel address = new JLabel("Address");
-        address.setBounds(50,250,150,30);
-        address.setFont(new Font("SAN_SERIF", Font.BOLD,20));
-        add(address);
+        JLabel addressLabel = new JLabel("Address");
+        addressLabel.setBounds(50, 250, 150, 30);
+        addressLabel.setFont(new Font("SAN_SERIF", Font.BOLD, 20));
+        add(addressLabel);
 
-        taddress= new JTextField();
-        taddress.setBounds(200,250,150,30);
-        taddress.setBackground(new Color(177,252,197));
+        taddress = new JTextField();
+        taddress.setBounds(200, 250, 150, 30);
+        taddress.setBackground(new Color(177, 252, 197));
         add(taddress);
 
+        JLabel phoneLabel = new JLabel("Phone");
+        phoneLabel.setBounds(400, 250, 150, 30);
+        phoneLabel.setFont(new Font("SAN_SERIF", Font.BOLD, 20));
+        add(phoneLabel);
 
-        JLabel phone = new JLabel("Phone");
-        phone.setBounds(400,250,150,30);
-        phone.setFont(new Font("SAN_SERIF", Font.BOLD,20));
-        add(phone);
-
-        tphone= new JTextField();
-        tphone.setBounds(600,250,150,30);
-        tphone.setBackground(new Color(177,252,197));
+        tphone = new JTextField();
+        tphone.setBounds(600, 250, 150, 30);
+        tphone.setBackground(new Color(177, 252, 197));
         add(tphone);
 
-        JLabel email = new JLabel("Email");
-        email.setBounds(50,300,150,30);
-        email.setFont(new Font("SAN_SERIF", Font.BOLD,20));
-        add(email);
+        JLabel emailLabel = new JLabel("Email");
+        emailLabel.setBounds(50, 300, 150, 30);
+        emailLabel.setFont(new Font("SAN_SERIF", Font.BOLD, 20));
+        add(emailLabel);
 
-        temail= new JTextField();
-        temail.setBounds(200,300,150,30);
-        temail.setBackground(new Color(177,252,197));
+        temail = new JTextField();
+        temail.setBounds(200, 300, 150, 30);
+        temail.setBackground(new Color(177, 252, 197));
         add(temail);
 
-        JLabel education = new JLabel("Higest Education");
-        education.setBounds(400,300,150,30);
-        education.setFont(new Font("SAN_SERIF", Font.BOLD,20));
-        add(education);
+        JLabel educationLabel = new JLabel("Highest Education");
+        educationLabel.setBounds(400, 300, 150, 30);
+        educationLabel.setFont(new Font("SAN_SERIF", Font.BOLD, 20));
+        add(educationLabel);
 
-        teducation= new JTextField();
-        teducation.setBounds(600,300,150,30);
-        teducation.setBackground(new Color(177,252,197));
-        add(teducation);
+        Boxeducation = new JComboBox<>(new String[]{
+            "BBA", "B.Tech", "BCA", "BA", "BSC", "B.COM", "MBA", "MCA", "MA", "MTech", "MSC", "PHD"
+        });
+        Boxeducation.setBackground(new Color(177, 252, 197));
+        Boxeducation.setBounds(600, 300, 150, 30);
+        add(Boxeducation);
 
-        JLabel aadhar = new JLabel("Aadhar Number");
-        aadhar.setBounds(400,350,150,30);
-        aadhar.setFont(new Font("SAN_SERIF", Font.BOLD,20));
-        add(aadhar);
+        JLabel aadharLabel = new JLabel("Aadhar Number");
+        aadharLabel.setBounds(400, 350, 150, 30);
+        aadharLabel.setFont(new Font("SAN_SERIF", Font.BOLD, 20));
+        add(aadharLabel);
 
-        JLabel taadhar= new JLabel();
-        taadhar.setBounds(600,350,150,30);
-        taadhar.setBackground(new Color(177,252,197));
+        taadhar = new JTextField();
+        taadhar.setBounds(600, 350, 150, 30);
+        taadhar.setBackground(new Color(177, 252, 197));
         add(taadhar);
 
+        JLabel designationLabel = new JLabel("Designation");
+        designationLabel.setBounds(50, 350, 150, 30);
+        designationLabel.setFont(new Font("SAN_SERIF", Font.BOLD, 20));
+        add(designationLabel);
 
-        JLabel empid = new JLabel("Employee ID");
-        empid.setBounds(50,400,150,30);
-        empid.setFont(new Font("SAN_SERIF", Font.BOLD,20));
-        add(empid);
-
-        tempid= new JLabel();
-        tempid.setBounds(200,400,150,30);
-        tempid.setFont(new Font("SAN_SARIF", Font.BOLD,20));
-        tempid.setForeground(Color.RED);
-        add(tempid);
-
-        JLabel designation = new JLabel("Designation");
-        designation.setBounds(50,350,150,30);
-        designation.setFont(new Font("SAN_SERIF", Font.BOLD,20));
-        add(designation);
-
-        tdesignation= new JTextField();
-        tdesignation.setBounds(200,350,150,30);
-        tdesignation.setBackground(new Color(177,252,197));
+        tdesignation = new JTextField();
+        tdesignation.setBounds(200, 350, 150, 30);
+        tdesignation.setBackground(new Color(177, 252, 197));
         add(tdesignation);
 
-        try {
-            conn c = new conn();
-            String query = "select * from employee where empId = '"+number+"'";
-            ResultSet resultSet = c.statement.executeQuery(query);
-            while (resultSet.next()){
-                tname.setText(resultSet.getString("name"));
-                tfname.setText(resultSet.getString("fname"));
-                tdob.setText(resultSet.getString("dob"));
-                taddress.setText(resultSet.getString("address"));
-                tsalary.setText(resultSet.getString("salary"));
-                tphone.setText(resultSet.getString("phone"));
-                temail.setText(resultSet.getString("email"));
-                teducation.setText(resultSet.getString("education"));
-                taadhar.setText(resultSet.getString("addhar"));
-                tempid.setText(resultSet.getString("empId"));
-                tdesignation.setText(resultSet.getString("designation"));
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        JLabel empIdLabel = new JLabel("Employee ID");
+        empIdLabel.setBounds(50, 400, 150, 30);
+        empIdLabel.setFont(new Font("SAN_SERIF", Font.BOLD, 20));
+        add(empIdLabel);
 
+        tempid = new JTextField(); // Change JLabel to JTextField for editable Employee ID
+        tempid.setBounds(200, 400, 150, 30);
+        tempid.setFont(new Font("SAN_SERIF", Font.BOLD, 20));
+        tempid.setForeground(Color.BLACK);
+        tempid.setBackground(new Color(177, 252, 197));
+        add(tempid);
 
-        add = new JButton("UPDATE");
-        add.setBounds(450,550,150,40);
-        add.setBackground(Color.black);
-        add.setForeground(Color.WHITE);
-        add.addActionListener(this);
-        add(add);
+        update = new JButton("UPDATE");
+        update.setBounds(450, 550, 150, 40);
+        update.setBackground(Color.BLACK);
+        update.setForeground(Color.WHITE);
+        update.addActionListener(this);
+        add(update);
 
         back = new JButton("BACK");
-        back.setBounds(250,550,150,40);
-        back.setBackground(Color.black);
+        back.setBounds(250, 550, 150, 40);
+        back.setBackground(Color.BLACK);
         back.setForeground(Color.WHITE);
         back.addActionListener(this);
         add(back);
 
+        try {
+            conn c = new conn();
+            String query = "SELECT * FROM employee WHERE empId = '" + number + "'";
+            ResultSet resultSet = c.statement.executeQuery(query);
+            while (resultSet.next()) {
+                // Populate fields with data from the database
+                tname.setText(resultSet.getString("name"));
+                tdobChooser.setDate(resultSet.getDate("dob"));
+                taddress.setText(resultSet.getString("address"));
+                tsalary.setText(resultSet.getString("salary"));
+                tphone.setText(resultSet.getString("phone"));
+                temail.setText(resultSet.getString("email"));
+                Boxeducation.setSelectedItem(resultSet.getString("education"));
+                taadhar.setText(resultSet.getString("aadhar"));
+                tdesignation.setText(resultSet.getString("designation"));
+                tfatherName.setText(resultSet.getString("fatherName"));
+                tempid.setText(resultSet.getString("empId"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        setSize(900,700);
-        setLayout(null);
-        setLocation(190,5);
+        setSize(900, 700);
+        setLocation(195, 4);
         setVisible(true);
+    }
 
+    public UpdateEmployee() {
+        //TODO Auto-generated constructor stub
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == add){
-            String fname = tfname.getText();
+        if (e.getSource() == update) {
+            String empId = tempid.getText();
+            String name = tname.getText();
+            String fatherName = tfatherName.getText();
+            String dob = ((JTextField) tdobChooser.getDateEditor().getUiComponent()).getText();
             String salary = tsalary.getText();
             String address = taddress.getText();
             String phone = tphone.getText();
             String email = temail.getText();
-            String education = teducation.getText();
+            String education = (String) Boxeducation.getSelectedItem();
             String designation = tdesignation.getText();
 
             try {
                 conn c = new conn();
-                String query = "update employee set fname = '"+fname+"', salary = '"+salary+"', address = '"+address+"', phone = '"+phone+"', email = '"+email+"', education = '"+education+"', designation = '"+designation+"' where empId = '"+number+"'";
+                String query = "UPDATE employee SET name = '" + name + "', fatherName = '" + fatherName + "', dob = '" + dob + "', salary = '" + salary + "', address = '" + address + "', phone = '" + phone + "', email = '" + email + "', education = '" + education + "', designation = '" + designation + "' WHERE empId = '" + empId + "'";
                 c.statement.executeUpdate(query);
                 JOptionPane.showMessageDialog(null, "Details updated successfully");
                 setVisible(false);
                 new Main_class();
-            }catch (Exception E){
+            } catch (Exception E) {
                 E.printStackTrace();
             }
-        }else {
+
+        } else {
             setVisible(false);
-            new View_Employee();
+            new Main_class();
         }
     }
 
     public static void main(String[] args) {
-        new UpdateEmployee("");
+        new UpdateEmployee("123456"); // Example Employee ID
     }
 }
