@@ -1,0 +1,123 @@
+package employee.management.system;
+
+import com.toedter.calendar.JDateChooser;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+
+public class AttendanceManagement extends JFrame implements ActionListener {
+    JTextField empIdField;
+    JComboBox<String> attendanceStatusBox, leaveBox;
+    JDateChooser dateChooser, leaveDateChooser;
+    JButton recordButton, backButton;
+    JLabel empIdLabel, dateLabel, attendanceStatusLabel, leaveLabel, leaveDateLabel;
+
+    AttendanceManagement() {
+        getContentPane().setBackground(new Color(163, 255, 188));
+        setLayout(null);
+
+        JLabel heading = new JLabel("Attendance Management");
+        heading.setBounds(320, 30, 500, 50);
+        heading.setFont(new Font("serif", Font.BOLD, 25));
+        add(heading);
+
+        empIdLabel = new JLabel("Employee ID");
+        empIdLabel.setBounds(50, 100, 150, 30);
+        empIdLabel.setFont(new Font("SAN_SERIF", Font.BOLD, 20));
+        add(empIdLabel);
+
+        empIdField = new JTextField();
+        empIdField.setBounds(200, 100, 150, 30);
+        empIdField.setBackground(new Color(177, 252, 197));
+        add(empIdField);
+
+        dateLabel = new JLabel("Date");
+        dateLabel.setBounds(50, 150, 150, 30);
+        dateLabel.setFont(new Font("SAN_SERIF", Font.BOLD, 20));
+        add(dateLabel);
+
+        dateChooser = new JDateChooser();
+        dateChooser.setBounds(200, 150, 150, 30);
+        dateChooser.setBackground(new Color(177, 252, 197));
+        add(dateChooser);
+
+        attendanceStatusLabel = new JLabel("Attendance Status");
+        attendanceStatusLabel.setBounds(50, 200, 200, 30);
+        attendanceStatusLabel.setFont(new Font("SAN_SERIF", Font.BOLD, 20));
+        add(attendanceStatusLabel);
+
+        attendanceStatusBox = new JComboBox<>(new String[]{"Present", "Absent"});
+        attendanceStatusBox.setBackground(new Color(177, 252, 197));
+        attendanceStatusBox.setBounds(250, 200, 150, 30);
+        add(attendanceStatusBox);
+
+        leaveLabel = new JLabel("Leave Request");
+        leaveLabel.setBounds(50, 250, 150, 30);
+        leaveLabel.setFont(new Font("SAN_SERIF", Font.BOLD, 20));
+        add(leaveLabel);
+
+        leaveBox = new JComboBox<>(new String[]{"Yes", "No"});
+        leaveBox.setBackground(new Color(177, 252, 197));
+        leaveBox.setBounds(200, 250, 100, 30);
+        add(leaveBox);
+
+        leaveDateLabel = new JLabel("Leave Date");
+        leaveDateLabel.setBounds(50, 300, 150, 30);
+        leaveDateLabel.setFont(new Font("SAN_SERIF", Font.BOLD, 20));
+        add(leaveDateLabel);
+
+        leaveDateChooser = new JDateChooser();
+        leaveDateChooser.setBounds(200, 300, 150, 30);
+        leaveDateChooser.setBackground(new Color(177, 252, 197));
+        add(leaveDateChooser);
+
+        recordButton = new JButton("Record");
+        recordButton.setBounds(50, 400, 150, 40);
+        recordButton.setBackground(Color.BLACK);
+        recordButton.setForeground(Color.WHITE);
+        recordButton.addActionListener(this);
+        add(recordButton);
+
+        backButton = new JButton("Back");
+        backButton.setBounds(250, 400, 150, 40);
+        backButton.setBackground(Color.BLACK);
+        backButton.setForeground(Color.WHITE);
+        backButton.addActionListener(this);
+        add(backButton);
+
+        setSize(900, 500);
+        setLocation(195, 4);
+        setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == recordButton) {
+            String empId = empIdField.getText();
+            String date = new SimpleDateFormat("yyyy-MM-dd").format(dateChooser.getDate());
+            String status = (String) attendanceStatusBox.getSelectedItem();
+            String leave = (String) leaveBox.getSelectedItem();
+            String leaveDate = new SimpleDateFormat("yyyy-MM-dd").format(leaveDateChooser.getDate());
+
+            try {
+                conn c = new conn();
+                String query = "INSERT INTO attendance (empId, date, status, leave, leaveDate) VALUES ('" 
+                    + empId + "', '" + date + "', '" + status + "', '" + leave + "', '" + leaveDate + "')";
+                c.statement.executeUpdate(query);
+                JOptionPane.showMessageDialog(null, "Attendance recorded successfully");
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        } else if (e.getSource() == backButton) {
+            setVisible(false);
+            new Main_class(); // Replace with the appropriate class if needed
+        }
+    }
+
+    public static void main(String[] args) {
+        new AttendanceManagement();
+    }
+}
