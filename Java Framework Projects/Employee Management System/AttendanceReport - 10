@@ -1,0 +1,46 @@
+package employee.management.system;
+
+import net.proteanit.sql.DbUtils;
+import javax.swing.*;
+import java.awt.*;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+public class AttendanceReport extends JFrame {
+    JTable table;
+    JScrollPane scrollPane;
+
+    AttendanceReport() {
+        getContentPane().setBackground(new Color(204, 255, 204));
+        setLayout(null);
+
+        JLabel heading = new JLabel("Attendance Report");
+        heading.setBounds(320, 30, 300, 40);
+        heading.setFont(new Font("Serif", Font.BOLD, 25));
+        add(heading);
+
+        table = new JTable();
+        scrollPane = new JScrollPane(table);
+        scrollPane.setBounds(20, 80, 800, 500);
+        add(scrollPane);
+
+        try {
+            // Connect to the database
+            conn c = new conn();
+            Statement stmt = c.statement;
+            String query = "SELECT * FROM attendance";
+            ResultSet rs = stmt.executeQuery(query);
+            table.setModel(DbUtils.resultSetToTableModel(rs));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        setSize(900, 650);
+        setLocation(200, 100);
+        setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        new AttendanceReport();
+    }
+}
