@@ -1,58 +1,69 @@
 public class BankAccount {
-    private String accountNumber;
+    private int number;
     private double balance;
-    private String accountHolderName;
+    private String name;
 
-    public BankAccount(String accountNumber, double initialBalance, String accountHolderName) {
-        this.accountNumber = accountNumber;
-        this.balance = initialBalance;
-        this.accountHolderName = accountHolderName;
+    public BankAccount(int number, double balance, String name) {
+        this.number = number;
+        this.balance = balance;
+        this.name = name;
     }
 
-    public void deposit(double amount) {
+    public double getBalance() {
+        return balance;
+    }
+
+    public void depositAmount(double amount) {
         if (amount > 0) {
             balance += amount;
-            System.out.println("Deposited: $" + amount);
+            System.out.println("Deposited: " + amount);
         } else {
             System.out.println("Deposit amount must be positive.");
         }
     }
 
-    public void withdraw(double amount) {
-        if (amount > 0) {
-            if (amount <= balance) {
-                balance -= amount;
-                System.out.println("Withdrew:" + amount);
-            } else {
-                System.out.println("Insufficient funds.");
-            }
+    public void withdrawAmount(double amount) {
+        if (amount > 0 && amount <= balance) {
+            balance -= amount;
+            System.out.println("Withdrew: " + amount);
+        } else if (amount > balance) {
+            System.out.println("Insufficient funds.");
         } else {
             System.out.println("Withdrawal amount must be positive.");
         }
     }
 
-    public double checkBalance() {
-        return balance;
-    }
-
     public void displayAccountDetails() {
-        System.out.println("Account Number: " + accountNumber);
-        System.out.println("Account Holder: " + accountHolderName);
-        System.out.println("Balance: $" + balance);
+        System.out.println("Account Number: " + number);
+        System.out.println("Account Holder: " + name);
+        System.out.println("Balance: " + balance);
     }
+}
 
+public class Main {
     public static void main(String[] args) {
-        BankAccount account1 = new BankAccount("123456", 500.00, "Alice Johnson");
-        BankAccount account2 = new BankAccount("789101", 1000.00, "Bob Smith");
+        BankAccount account1 = new BankAccount(1000, 2000.00, "Person1");
+        BankAccount account2 = new BankAccount(234, 500.00, "Person2");
+        BankAccount account3 = new BankAccount(23, 1500.00, "Person3");
 
+        System.out.println("Initial Account Details:");
         account1.displayAccountDetails();
-        account1.deposit(150.00);
-        account1.withdraw(200.00);
-        System.out.println("Balance after transactions: $" + account1.checkBalance());
-
         account2.displayAccountDetails();
-        account2.deposit(300.00);
-        account2.withdraw(500.00);
-        System.out.println("Balance after transactions: $" + account2.checkBalance());
+        account3.displayAccountDetails();
+        System.out.println();
+
+        account1.depositAmount(250.00);
+        account1.withdrawAmount(100.00);
+
+        account2.depositAmount(50.00);
+        account2.withdrawAmount(600.00); // Insufficient funds
+
+        account3.depositAmount(300.00);
+        account3.withdrawAmount(500.00);
+
+        System.out.println("Updated Account Details:");
+        account1.displayAccountDetails();
+        account2.displayAccountDetails();
+        account3.displayAccountDetails();
     }
 }
