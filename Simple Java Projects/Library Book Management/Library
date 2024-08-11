@@ -1,0 +1,56 @@
+import java.util.HashMap;
+import java.util.Map;
+
+public class Library {
+    private Map<String, Book> books;
+
+    public Library() {
+        books = new HashMap<>();
+    }
+
+    public void addBook(Book book) {
+        books.put(book.getIsbn(), book);
+        System.out.println("Book added: " + book.getIsbn());
+    }
+
+    public Book searchBookByIsbn(String isbn) {
+        return books.get(isbn);
+    }
+
+    public void checkOutBook(String isbn, String borrower) {
+        Book book = books.get(isbn);
+        if (book != null) {
+            book.checkOut(borrower);
+        } else {
+            System.out.println("Book not found.");
+        }
+    }
+
+    public void returnBook(String isbn) {
+        Book book = books.get(isbn);
+        if (book != null) {
+            book.returnBook();
+        } else {
+            System.out.println("Book not found.");
+        }
+    }
+
+    public static void main(String[] args) {
+        Library library = new Library();
+        
+        Book book1 = new Book("1984", "George Orwell", "1234567890");
+        Book book2 = new Book("To Kill a Mockingbird", "Harper Lee", "0987654321");
+        
+        library.addBook(book1);
+        library.addBook(book2);
+        
+        book1.displayBookDetails();
+        book2.displayBookDetails();
+        
+        library.checkOutBook("1234567890", "John Doe");
+        book1.displayBookDetails();
+        
+        library.returnBook("1234567890");
+        book1.displayBookDetails();
+    }
+}
