@@ -1,0 +1,51 @@
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+public class Book {
+    private String title;
+    private String author;
+    private String isbn;
+    private boolean isAvailable;
+    private List<String> lendingHistory;
+
+    public Book(String title, String author, String isbn) {
+        this.title = title;
+        this.author = author;
+        this.isbn = isbn;
+        this.isAvailable = true;
+        this.lendingHistory = new ArrayList<>();
+    }
+
+    public void checkOut(String borrower) {
+        if (isAvailable) {
+            isAvailable = false;
+            lendingHistory.add("Checked out by " + borrower + " on " + new Date());
+            System.out.println("Book checked out by: " + borrower);
+        } else {
+            System.out.println("Book is not available.");
+        }
+    }
+
+    public void returnBook() {
+        if (!isAvailable) {
+            isAvailable = true;
+            lendingHistory.add("Returned on " + new Date());
+            System.out.println("Book returned.");
+        } else {
+            System.out.println("Book was not checked out.");
+        }
+    }
+
+    public void displayBookDetails() {
+        System.out.println("Title: " + title);
+        System.out.println("Author: " + author);
+        System.out.println("ISBN: " + isbn);
+        System.out.println("Available: " + (isAvailable ? "Yes" : "No"));
+        System.out.println("Lending History: " + lendingHistory);
+    }
+    
+    public String getIsbn() {
+        return isbn;
+    }
+}
