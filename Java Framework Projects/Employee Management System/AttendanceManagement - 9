@@ -14,7 +14,8 @@ public class AttendanceManagement extends JFrame implements ActionListener {
     JButton recordButton, backButton;
     JLabel empIdLabel, dateLabel, statusLabel, leaveLabel, leaveDateLabel;
 
-    AttendanceManagement() {
+    // Modified Constructor to accept empId and pre-fill it
+    AttendanceManagement(String empId) {
         getContentPane().setBackground(new Color(163, 255, 188));
         setLayout(null);
 
@@ -28,9 +29,10 @@ public class AttendanceManagement extends JFrame implements ActionListener {
         empIdLabel.setFont(new Font("SAN_SERIF", Font.BOLD, 20));
         add(empIdLabel);
 
-        empIdField = new JTextField();
+        empIdField = new JTextField(empId);  // Pre-fill Employee ID
         empIdField.setBounds(200, 100, 150, 30);
         empIdField.setBackground(new Color(177, 252, 197));
+        empIdField.setEditable(false);  // Make it non-editable
         add(empIdField);
 
         dateLabel = new JLabel("Date");
@@ -102,7 +104,7 @@ public class AttendanceManagement extends JFrame implements ActionListener {
             String leaveDate = leaveDateChooser.getDate() != null 
                                 ? new SimpleDateFormat("yyyy-MM-dd").format(leaveDateChooser.getDate()) 
                                 : "NULL";
-
+    
             try {
                 conn c = new conn();
                 String query = "INSERT INTO attendance (empId, date, status, `leave`, leaveDate) VALUES ('" 
@@ -111,8 +113,9 @@ public class AttendanceManagement extends JFrame implements ActionListener {
                 c.statement.executeUpdate(query);
                 JOptionPane.showMessageDialog(null, "Attendance recorded successfully");
                 
-                // Open AttendanceReport to view updated details
-                new AttendanceReport(); 
+                new AddEmployee(); 
+                setVisible(false);
+    
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -121,8 +124,8 @@ public class AttendanceManagement extends JFrame implements ActionListener {
             new Main_class();
         }
     }
-
+    
     public static void main(String[] args) {
-        new AttendanceManagement();
+        new AttendanceManagement("");
     }
 }
