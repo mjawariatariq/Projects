@@ -1,0 +1,36 @@
+CREATE TABLE IF NOT EXISTS login (
+  username VARCHAR(20),
+  password VARCHAR(20)
+);
+
+INSERT INTO login (username, password) VALUES ('jawaria', '12345');
+
+CREATE TABLE IF NOT EXISTS employee (
+  name VARCHAR(40),
+  dob DATE,
+  salary DECIMAL(10, 2),
+  address VARCHAR(100),
+  addhar VARCHAR(20),
+  phone VARCHAR(15),
+  email VARCHAR(50),
+  education VARCHAR(50),
+  designation VARCHAR(50),
+  empID VARCHAR(20)
+);
+
+-- Add the 'fname' column here
+ALTER TABLE employee ADD COLUMN fname VARCHAR(40);
+
+INSERT INTO employee (name, fname, dob, salary, address, addhar, phone, email, education, designation, empID)
+VALUES ('John', 'Doe', '1980-01-01', 50000.00, '123 Elm Street', '123456789012','123409978','john.doe@example.com', 'MBA', 'Manager','EMP001');
+
+CREATE TABLE IF NOT EXISTS attendance (
+  empId VARCHAR(20),
+  date DATE,
+  status VARCHAR(10),
+  leave VARCHAR(10),
+  leaveDate DATE
+);
+
+INSERT INTO attendance (empId, date, status, leave, leaveDate) 
+VALUES ('EMP001', '2024-08-16', 'Present', 'No', NULL);
