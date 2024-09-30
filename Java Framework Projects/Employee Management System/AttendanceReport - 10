@@ -1,4 +1,4 @@
-package employee.management.system;
+package employeemanagementsystem;
 
 import net.proteanit.sql.DbUtils;
 import javax.swing.*;
@@ -25,9 +25,8 @@ public class AttendanceReport extends JFrame {
         add(scrollPane);
 
         try {
-            // Connect to the database
             conn c = new conn();
-            Statement stmt = c.statement;
+            Statement stmt = c.getStatement();
             String query = "SELECT * FROM attendance";
             ResultSet rs = stmt.executeQuery(query);
             table.setModel(DbUtils.resultSetToTableModel(rs));
