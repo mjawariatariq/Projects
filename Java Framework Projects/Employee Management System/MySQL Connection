@@ -1,0 +1,37 @@
+CREATE DATABASE IF NOT EXISTS employeemanagementsystem;
+
+USE employeemanagementsystem;
+
+CREATE TABLE IF NOT EXISTS login (
+    username VARCHAR(20) PRIMARY KEY,
+    password VARCHAR(20)
+);
+
+INSERT INTO login (username, password) VALUES ('jawaria', '12345');
+
+CREATE TABLE IF NOT EXISTS employee (
+    empID VARCHAR(20) PRIMARY KEY,  
+    name VARCHAR(100) NOT NULL,     
+    dob DATE NOT NULL,                
+    salary DECIMAL(10, 2) NOT NULL,  
+    address VARCHAR(255),             
+    addhar VARCHAR(20),               
+    phone VARCHAR(15),               
+    email VARCHAR(100),               
+    education VARCHAR(50),           
+    designation VARCHAR(50)          
+);
+
+INSERT INTO employee (empID, name, dob, salary, address, addhar, phone, email, education, designation) VALUES
+('EMP001', 'John Doe', '1990-05-15', 50000.00, '123 Main St, City', '1234-5678-9012', '1234567890', 'johndoe@example.com', 'B.Tech', 'Software Engineer');
+
+CREATE TABLE IF NOT EXISTS attendance (
+    empId VARCHAR(20) PRIMARY KEY,
+    date DATE,
+    status VARCHAR(10),
+    leave VARCHAR(10),
+    leaveDate DATE
+);
+
+INSERT INTO attendance (empId, date, status, leave, leaveDate) 
+VALUES ('EMP001', '2024-08-16', 'Present', 'No', NULL);
