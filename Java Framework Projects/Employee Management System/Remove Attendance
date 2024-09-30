@@ -1,0 +1,77 @@
+package employeemanagementsystem;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class RemoveAttendance extends JFrame implements ActionListener {
+    JTextField empIdField;
+    JButton removeButton, backButton;
+
+    RemoveAttendance() {
+        getContentPane().setBackground(new Color(255, 204, 204));
+        setLayout(null);
+
+        JLabel heading = new JLabel("Remove Attendance Record");
+        heading.setBounds(320, 30, 300, 40);
+        heading.setFont(new Font("Serif", Font.BOLD, 25));
+        add(heading);
+
+        JLabel empIdLabel = new JLabel("Employee ID");
+        empIdLabel.setBounds(50, 100, 150, 30);
+        empIdLabel.setFont(new Font("SAN_SERIF", Font.BOLD, 20));
+        add(empIdLabel);
+
+        empIdField = new JTextField();
+        empIdField.setBounds(200, 100, 150, 30);
+        empIdField.setBackground(new Color(255, 230, 230));
+        add(empIdField);
+
+        removeButton = new JButton("Remove");
+        removeButton.setBounds(50, 200, 150, 40);
+        removeButton.setBackground(Color.BLACK);
+        removeButton.setForeground(Color.WHITE);
+        removeButton.addActionListener(this);
+        add(removeButton);
+
+        backButton = new JButton("Back");
+        backButton.setBounds(250, 200, 150, 40);
+        backButton.setBackground(Color.BLACK);
+        backButton.setForeground(Color.WHITE);
+        backButton.addActionListener(this);
+        add(backButton);
+
+        setSize(500, 400);
+        setLocation(450, 200);
+        setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == removeButton) {
+            String empId = empIdField.getText();
+            try {
+                conn c = new conn();
+                String query = "DELETE FROM attendance WHERE empId = '" + empId + "'";
+                int result = c.statement.executeUpdate(query);
+
+                if (result > 0) {
+                    JOptionPane.showMessageDialog(null, "Attendance record removed successfully");
+                } else {
+                    JOptionPane.showMessageDialog(null, "No record found for Employee ID: " + empId);
+                }
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        } else if (e.getSource() == backButton) {
+            setVisible(false);
+            new Main_class();
+        }
+    }
+
+    public static void main(String[] args) {
+        new RemoveAttendance();
+    }
+}
