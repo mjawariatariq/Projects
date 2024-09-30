@@ -1,4 +1,4 @@
-package employee.management.system;
+package employeemanagementsystem;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,55 +12,54 @@ public class Login extends JFrame implements ActionListener {
     JPasswordField tpassword;
     JButton login, back;
 
-    Login(){
+    Login() {
 
         JLabel username = new JLabel("Username");
-        username.setBounds(40,20,100,30);
+        username.setBounds(40, 20, 100, 30);
         add(username);
 
         tusername = new JTextField();
-        tusername.setBounds(150,20,150,30);
+        tusername.setBounds(150, 20, 150, 30);
         add(tusername);
 
         JLabel password = new JLabel("Password");
-        password.setBounds(40,70,100,30);
+        password.setBounds(40, 70, 100, 30);
         add(password);
 
         tpassword = new JPasswordField();
-        tpassword.setBounds(150,70,150,30);
+        tpassword.setBounds(150, 70, 150, 30);
         add(tpassword);
 
         login = new JButton("LOGIN");
-        login.setBounds(150,140,150,30);
+        login.setBounds(150, 140, 150, 30);
         login.setBackground(Color.black);
         login.setForeground(Color.WHITE);
         login.addActionListener(this);
         add(login);
 
         back = new JButton("BACK");
-        back.setBounds(150,180,150,30);
+        back.setBounds(150, 180, 150, 30);
         back.setBackground(Color.black);
         back.setForeground(Color.WHITE);
         back.addActionListener(this);
         add(back);
 
         ImageIcon i11 = new ImageIcon(ClassLoader.getSystemResource("icons/second.jpg"));
-        Image i22 = i11.getImage().getScaledInstance(600,400,Image.SCALE_DEFAULT);
+        Image i22 = i11.getImage().getScaledInstance(600, 400, Image.SCALE_DEFAULT);
         ImageIcon i33 = new ImageIcon(i22);
         JLabel imgg = new JLabel(i33);
-        imgg.setBounds(350,10,600,400);
+        imgg.setBounds(350, 10, 600, 400);
         add(imgg);
 
-
         ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("icons/LoginB.jpg"));
-        Image i2 = i1.getImage().getScaledInstance(600,300,Image.SCALE_DEFAULT);
+        Image i2 = i1.getImage().getScaledInstance(600, 300, Image.SCALE_DEFAULT);
         ImageIcon i3 = new ImageIcon(i2);
         JLabel img = new JLabel(i3);
-        img.setBounds(0,0,600,300);
+        img.setBounds(0, 0, 600, 300);
         add(img);
 
-        setSize(600,300);
-        setLocation(450,200);
+        setSize(600, 300);
+        setLocation(450, 200);
         setLayout(null);
         setVisible(true);
     }
@@ -70,7 +69,7 @@ public class Login extends JFrame implements ActionListener {
         if (e.getSource() == login) {
             String username = tusername.getText();
             String password = tpassword.getText();
-    
+
             // Perform authentication
             if (authenticate(username, password)) {
                 // If authentication is successful, close the login window
@@ -89,17 +88,13 @@ public class Login extends JFrame implements ActionListener {
             System.exit(0); // Exit the application
         }
     }
-    
-    
+
     private boolean authenticate(String username, String password) {
-        // Perform the authentication logic here, such as querying the database
-        // You can use your database connection to check if the username and password match
-    
-        // For demonstration purposes, let's assume the authentication is successful if the username is "jawaria" and the password is "12345"
+
         return username.equals("jawaria") && password.equals("12345");
     }
-    
+
     public static void main(String[] args) {
         new Login();
     }
-}    
+}
