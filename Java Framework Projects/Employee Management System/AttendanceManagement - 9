@@ -1,4 +1,4 @@
-package employee.management.system;
+package employeemanagementsystem;
 
 import com.toedter.calendar.JDateChooser;
 import javax.swing.*;
@@ -14,7 +14,6 @@ public class AttendanceManagement extends JFrame implements ActionListener {
     JButton recordButton, backButton;
     JLabel empIdLabel, dateLabel, statusLabel, leaveLabel, leaveDateLabel;
 
-    // Modified Constructor to accept empId and pre-fill it
     AttendanceManagement(String empId) {
         getContentPane().setBackground(new Color(163, 255, 188));
         setLayout(null);
@@ -29,10 +28,10 @@ public class AttendanceManagement extends JFrame implements ActionListener {
         empIdLabel.setFont(new Font("SAN_SERIF", Font.BOLD, 20));
         add(empIdLabel);
 
-        empIdField = new JTextField(empId);  // Pre-fill Employee ID
+        empIdField = new JTextField(empId); // Pre-fill Employee ID
         empIdField.setBounds(200, 100, 150, 30);
         empIdField.setBackground(new Color(177, 252, 197));
-        empIdField.setEditable(false);  // Make it non-editable
+        empIdField.setEditable(false); // Make it non-editable
         add(empIdField);
 
         dateLabel = new JLabel("Date");
@@ -50,7 +49,7 @@ public class AttendanceManagement extends JFrame implements ActionListener {
         statusLabel.setFont(new Font("SAN_SERIF", Font.BOLD, 20));
         add(statusLabel);
 
-        attendanceStatusBox = new JComboBox<>(new String[]{"Present", "Absent"});
+        attendanceStatusBox = new JComboBox<>(new String[] { "Present", "Absent" });
         attendanceStatusBox.setBackground(new Color(177, 252, 197));
         attendanceStatusBox.setBounds(200, 200, 150, 30);
         add(attendanceStatusBox);
@@ -60,7 +59,7 @@ public class AttendanceManagement extends JFrame implements ActionListener {
         leaveLabel.setFont(new Font("SAN_SERIF", Font.BOLD, 20));
         add(leaveLabel);
 
-        leaveBox = new JComboBox<>(new String[]{"Yes", "No"});
+        leaveBox = new JComboBox<>(new String[] { "Yes", "No" });
         leaveBox.setBackground(new Color(177, 252, 197));
         leaveBox.setBounds(200, 250, 100, 30);
         add(leaveBox);
@@ -94,6 +93,9 @@ public class AttendanceManagement extends JFrame implements ActionListener {
         setVisible(true);
     }
 
+    public AttendanceManagement() {
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == recordButton) {
@@ -101,21 +103,21 @@ public class AttendanceManagement extends JFrame implements ActionListener {
             String date = new SimpleDateFormat("yyyy-MM-dd").format(dateChooser.getDate());
             String status = (String) attendanceStatusBox.getSelectedItem();
             String leave = (String) leaveBox.getSelectedItem();
-            String leaveDate = leaveDateChooser.getDate() != null 
-                                ? new SimpleDateFormat("yyyy-MM-dd").format(leaveDateChooser.getDate()) 
-                                : "NULL";
-    
+            String leaveDate = leaveDateChooser.getDate() != null
+                    ? new SimpleDateFormat("yyyy-MM-dd").format(leaveDateChooser.getDate())
+                    : "NULL";
+
             try {
                 conn c = new conn();
-                String query = "INSERT INTO attendance (empId, date, status, `leave`, leaveDate) VALUES ('" 
-                    + empId + "', '" + date + "', '" + status + "', '" + leave + "', " 
-                    + (leaveDate.equals("NULL") ? "NULL" : "'" + leaveDate + "'") + ")";
+                String query = "INSERT INTO attendance (empId, date, status, `leave`, leaveDate) VALUES ('"
+                        + empId + "', '" + date + "', '" + status + "', '" + leave + "', "
+                        + (leaveDate.equals("NULL") ? "NULL" : "'" + leaveDate + "'") + ")";
                 c.statement.executeUpdate(query);
                 JOptionPane.showMessageDialog(null, "Attendance recorded successfully");
-                
-                new AddEmployee(); 
+
+                new AddEmployee();
                 setVisible(false);
-    
+
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -124,7 +126,7 @@ public class AttendanceManagement extends JFrame implements ActionListener {
             new Main_class();
         }
     }
-    
+
     public static void main(String[] args) {
         new AttendanceManagement("");
     }
