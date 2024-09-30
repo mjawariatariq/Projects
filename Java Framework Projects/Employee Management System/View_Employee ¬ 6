@@ -1,4 +1,4 @@
-package employee.management.system;
+package employeemanagementsystem;
 
 import net.proteanit.sql.DbUtils;
 
@@ -12,17 +12,17 @@ public class View_Employee extends JFrame implements ActionListener {
     JTable table;
     Choice choiceEMP;
     JButton searchbtn, print, update, back, viewAttendance;
-    
+
     View_Employee() {
-        getContentPane().setBackground(new Color(255,131,122));
+        getContentPane().setBackground(new Color(255, 131, 122));
         setLayout(null);
 
         JLabel search = new JLabel("Search by employee id");
-        search.setBounds(20,20,150,20);
+        search.setBounds(20, 20, 150, 20);
         add(search);
 
         choiceEMP = new Choice();
-        choiceEMP.setBounds(180,20,150,20);
+        choiceEMP.setBounds(180, 20, 150, 20);
         add(choiceEMP);
 
         try {
@@ -38,50 +38,50 @@ public class View_Employee extends JFrame implements ActionListener {
         table = new JTable();
         try {
             conn c = new conn();
-            ResultSet resultSet = c.statement.executeQuery("SELECT * FROM employee");
+            ResultSet resultSet = c.getStatement().executeQuery("SELECT * FROM employee");
             table.setModel(DbUtils.resultSetToTableModel(resultSet));
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         JScrollPane jp = new JScrollPane(table);
-        jp.setBounds(0,100,900,600);
+        jp.setBounds(0, 100, 900, 600);
         add(jp);
 
         searchbtn = new JButton("Search");
-        searchbtn.setBounds(20,70,80,20);
+        searchbtn.setBounds(20, 70, 80, 20);
         searchbtn.addActionListener(this);
         add(searchbtn);
 
         print = new JButton("Print");
-        print.setBounds(120,70,80,20);
+        print.setBounds(120, 70, 80, 20);
         print.addActionListener(this);
         add(print);
 
         update = new JButton("Update");
-        update.setBounds(220,70,80,20);
+        update.setBounds(220, 70, 80, 20);
         update.addActionListener(this);
         add(update);
 
         back = new JButton("Back");
-        back.setBounds(320,70,80,20);
+        back.setBounds(320, 70, 80, 20);
         back.addActionListener(this);
         add(back);
 
         viewAttendance = new JButton("View Attendance");
-        viewAttendance.setBounds(420,70,150,20);
+        viewAttendance.setBounds(420, 70, 150, 20);
         viewAttendance.addActionListener(this);
         add(viewAttendance);
 
-        setSize(900,700);
-        setLocation(300,100);
+        setSize(900, 700);
+        setLocation(300, 100);
         setVisible(true);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == searchbtn) {
-            String query = "SELECT * FROM employee WHERE empId = '"+choiceEMP.getSelectedItem()+"'";
+            String query = "SELECT * FROM employee WHERE empId = '" + choiceEMP.getSelectedItem() + "'";
             try {
                 conn c = new conn();
                 ResultSet resultSet = c.statement.executeQuery(query);
@@ -99,7 +99,7 @@ public class View_Employee extends JFrame implements ActionListener {
             setVisible(false);
             new UpdateEmployee(choiceEMP.getSelectedItem());
         } else if (e.getSource() == viewAttendance) {
-            new AttendanceReport();  // Open the AttendanceReport window
+            new AttendanceReport();
         } else {
             setVisible(false);
             new Main_class();
