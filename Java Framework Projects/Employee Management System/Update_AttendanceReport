@@ -1,0 +1,142 @@
+package employeemanagementsystem;
+
+import com.toedter.calendar.JDateChooser;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+public class Update_AttendanceReport extends JFrame implements ActionListener {
+    JComboBox<String> employeeIdComboBox;
+    JDateChooser dateChooser;
+    JComboBox<String> statusComboBox;
+    JComboBox<String> leaveRequestComboBox; // ComboBox for Leave Request
+    JButton updateButton;
+    JButton backButton;
+
+    Update_AttendanceReport() {
+        getContentPane().setBackground(new Color(204, 255, 204));
+        setLayout(null);
+
+        JLabel heading = new JLabel("Update Attendance");
+        heading.setBounds(320, 30, 300, 40);
+        heading.setFont(new Font("Serif", Font.BOLD, 25));
+        add(heading);
+
+        JLabel employeeIdLabel = new JLabel("Employee ID");
+        employeeIdLabel.setBounds(50, 100, 150, 30);
+        employeeIdLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
+        add(employeeIdLabel);
+
+        employeeIdComboBox = new JComboBox<>();
+        employeeIdComboBox.setBounds(200, 100, 150, 30);
+        add(employeeIdComboBox);
+        loadEmployeeIds();
+
+        JLabel dateLabel = new JLabel("Date");
+        dateLabel.setBounds(50, 150, 150, 30);
+        dateLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
+        add(dateLabel);
+
+        dateChooser = new JDateChooser();
+        dateChooser.setBounds(200, 150, 150, 30);
+        add(dateChooser);
+
+        JLabel statusLabel = new JLabel("Status");
+        statusLabel.setBounds(50, 200, 150, 30);
+        statusLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
+        add(statusLabel);
+
+        statusComboBox = new JComboBox<>(new String[] { "Present", "Absent" });
+        statusComboBox.setBounds(200, 200, 150, 30);
+        add(statusComboBox);
+
+        JLabel leaveRequestLabel = new JLabel("Leave Request");
+        leaveRequestLabel.setBounds(50, 250, 150, 30);
+        leaveRequestLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
+        add(leaveRequestLabel);
+
+        leaveRequestComboBox = new JComboBox<>(new String[] { "Yes", "No" });
+        leaveRequestComboBox.setBounds(200, 250, 150, 30);
+        add(leaveRequestComboBox);
+
+        updateButton = new JButton("Update");
+        updateButton.setBounds(80, 300, 100, 30);
+        updateButton.setBackground(Color.black);
+        updateButton.setForeground(Color.WHITE);
+        updateButton.addActionListener(this);
+        add(updateButton);
+
+        backButton = new JButton("Back");
+        backButton.setBounds(220, 300, 100, 30);
+        backButton.setBackground(Color.black);
+        backButton.setForeground(Color.WHITE);
+        backButton.addActionListener(this);
+        add(backButton);
+
+        setSize(500, 400);
+        setLocation(200, 100);
+        setVisible(true);
+    }
+
+    private void loadEmployeeIds() {
+        try {
+            conn c = new conn();
+            Statement stmt = c.statement;
+            ResultSet rs = stmt.executeQuery("SELECT empId FROM employee");
+            while (rs.next()) {
+                employeeIdComboBox.addItem(rs.getString("empId"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == updateButton) {
+            try {
+                conn c = new conn();
+                String empId = (String) employeeIdComboBox.getSelectedItem();
+                java.util.Date selectedDate = dateChooser.getDate();
+                if (selectedDate == null) {
+                    JOptionPane.showMessageDialog(null, "Please select a date.");
+                    return;
+                }
+                String date = new java.text.SimpleDateFormat("yyyy-MM-dd").format(selectedDate);
+                String status = (String) statusComboBox.getSelectedItem();
+                String leaveRequest = (String) leaveRequestComboBox.getSelectedItem();
+
+                Statement stmt = c.statement;
+                String checkQuery = "SELECT * FROM attendance WHERE empId = '" + empId + "' AND date = '" + date + "'";
+                ResultSet rs = stmt.executeQuery(checkQuery);
+
+                if (rs.next()) {
+
+                    String updateQuery = "UPDATE attendance SET status = '" + status + "', leaveRequest = '"
+                            + leaveRequest + "' WHERE empId = '" + empId + "' AND date = '" + date + "'";
+                    stmt.executeUpdate(updateQuery);
+                } else {
+                    String insertQuery = "INSERT INTO attendance (empId, date, status, leaveRequest) VALUES ('" + empId
+                            + "', '" + date + "', '" + status + "', '" + leaveRequest + "')";
+                    stmt.executeUpdate(insertQuery);
+                }
+
+                JOptionPane.showMessageDialog(null, "Attendance Record Updated Successfully");
+                setVisible(false);
+                new Main_class();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        } else if (e.getSource() == backButton) {
+            setVisible(false);
+            new Main_class();
+        }
+    }
+
+    public static void main(String[] args) {
+        new Update_AttendanceReport();
+    }
+}
