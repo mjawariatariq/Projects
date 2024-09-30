@@ -1,35 +1,32 @@
-package employee.management.system;
+package employeemanagementsystem;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.DriverManager;
 
 public class conn implements AutoCloseable {
 
-    Connection connection;
+    private Connection connection;
     Statement statement;
 
     public conn() {
         try {
-            // Load and register MySQL JDBC driver
             Class.forName("com.mysql.cj.jdbc.Driver");
-            // Establish a connection
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/employeemanagement", "root", "12345");
-            // Create a statement object
             statement = connection.createStatement();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            System.err.println("JDBC driver not found: " + e.getMessage());
+        } catch (SQLException e) {
+            System.err.println("Error establishing connection: " + e.getMessage());
         }
     }
 
-    // Method to get a Statement object
     public Statement getStatement() {
         return statement;
     }
 
-    // Method to prepare a SQL statement
     public PreparedStatement prepareStatement(String query) throws SQLException {
         return connection.prepareStatement(query);
     }
@@ -37,10 +34,14 @@ public class conn implements AutoCloseable {
     @Override
     public void close() {
         try {
-            if (statement != null) statement.close();
-            if (connection != null) connection.close();
+            if (statement != null) {
+                statement.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Error closing connection: " + e.getMessage());
         }
     }
 }
