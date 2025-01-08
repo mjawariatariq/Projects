@@ -1,0 +1,24 @@
+import os
+from django.core.asgi import get_asgi_application
+from channels.auth import AuthMiddlewareStack
+from channels.routing import ProtocolTypeRouter, URLRouter
+from rtc_app import routing  # Import routing from your app 'rtc_app'
+
+# Set the default settings module for Django
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'NetworkChatApplication.settings')
+
+# Get the Django ASGI application
+django_asgi_app = get_asgi_application()
+
+# Define the ASGI application with protocol routing
+application = ProtocolTypeRouter({
+    "http": django_asgi_app,  # Handle HTTP requests
+    "websocket": AuthMiddlewareStack(  # Handle WebSocket requests with authentication
+        URLRouter(
+            routing.websocket_urlpatterns  # WebSocket URL patterns from the 'rtc_app'
+        )
+    ),
+})
+
+# Explicitly define the ASGI application path for Django settings
+ASGI_APPLICATION = 'NetworkChatApplication.asgi.application'
