@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ room_name|title }} Chat</title>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <div class="chat-room-container">
+        <h2>{{ room_name|title }} Chat</h2> <!-- Display room name dynamically -->
+
+        <div id="chat-log">
+            {% for message in messages %}
+            <div class="message">
+                <strong>{{ message.user.username }}:</strong> {{ message.content }}
+            </div>
+            {% endfor %}
+        </div>
+
+        <form method="POST" action="{% url 'send_message' room_name=room.name %}">
+            {% csrf_token %}
+            <textarea name="message" id="chat-message-input" placeholder="Type a message..." required></textarea>
+            <button type="submit" id="send-message">Send</button>
+        </form>
+    </div>
+
+    <script src="{% static 'chat.js' %}"></script>
+</body>
+</html>
