@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacts & Groups</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="list-container">
+        <h2>Contacts & Groups</h2>
+        <div class="list">
+            <h3>Groups</h3>
+            <ul>
+                <li><a href="{% url 'chat_room' room_name='Family Group' %}"><i class="fas fa-users"></i> Family Group</a></li>
+                <li><a href="{% url 'chat_room' room_name='Friends Group' %}"><i class="fas fa-users"></i> Friends Group</a></li>
+            </ul>
+            <h3>Contacts</h3>
+            <ul>
+                <li><a href="{% url 'chat_room' room_name='Bushra' %}"><i class="fas fa-user"></i> Bushra</a></li>
+                <li><a href="{% url 'chat_room' room_name='Jawaria' %}"><i class="fas fa-user"></i> Jawaria</a></li>
+            </ul>
+        </div>
+    </div>
+    <script src="{% static 'chat.js' %}"></script>
+</body>
+</html>
