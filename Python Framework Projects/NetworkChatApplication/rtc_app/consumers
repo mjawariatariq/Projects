@@ -1,51 +1,116 @@
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
+from channels.layers import get_channel_layer
+from django.contrib.auth.models import User
+
 
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
-        self.roomGroupName = "group_chat_gfg"
-        print(f"Connecting to group: {self.roomGroupName}")
+        self.room_name = self.scope['url_route']['kwargs'].get('room_name', 'default_room')
+        self.room_group_name = f'chat_{self.room_name}'
+
+        print(f"Connecting to group: {self.room_group_name}")
 
         # Add the WebSocket connection to the group
         await self.channel_layer.group_add(
-            self.roomGroupName,
+            self.room_group_name,
+            self.channel_name
+        )
+
+        # Add user to the "online_users" group (optional)
+        await self.channel_layer.group_add(
+            "online_users",
             self.channel_name
         )
 
         await self.accept()
+        await self.notify_online_users()
 
-async def disconnect(self, close_code):
-    print(f"WebSocket disconnected with close code: {close_code}")
-    await self.channel_layer.group_discard(
-        self.roomGroupName,
-        self.channel_name
-    )
+    async def disconnect(self, close_code):
+        print(f"WebSocket disconnected with close code: {close_code}")
+
+        # Remove WebSocket connection from the room group
+        await self.channel_layer.group_discard(
+            self.room_group_name,
+            self.channel_name
+        )
+
+        # Remove user from "online_users" group (optional)
+        await self.channel_layer.group_discard(
+            "online_users",
+            self.channel_name
+        )
+
+        await self.notify_online_users()
 
     async def receive(self, text_data):
         try:
-            text_data_json = json.loads(text_data)
-            message = text_data_json.get("message")
-            username = text_data_json.get("username")
+            data = json.loads(text_data)
+            message = data.get("message")
+            username = data.get("username")
+            typing = data.get("typing", False)
 
-            print(f"Received message: {message} from {username}")
-
-            # Send the message to the group
-            await self.channel_layer.group_send(
-                self.roomGroupName,
-                {
-                    "type": "send_message",
-                    "message": message,
-                    "username": username,
-                }
-            )
+            if typing:
+                # Broadcast typing indicator
+                await self.channel_layer.group_send(
+                    self.room_group_name,
+                    {
+                        "type": "typing_indicator",
+                        "username": username,
+                        "typing": typing,
+                    }
+                )
+            elif message:
+                # Broadcast message to group
+                await self.channel_layer.group_send(
+                    self.room_group_name,
+                    {
+                        "type": "send_message",
+                        "message": message,
+                        "username": username,
+                    }
+                )
         except Exception as e:
             print(f"Error in receive: {e}")
 
     async def send_message(self, event):
-        message = event["message"]
-        username = event["username"]
-
-        # Send the message to WebSocket
+        # Send message to WebSocket
         await self.send(
-            text_data=json.dumps({"message": message, "username": username})
+            text_data=json.dumps({
+                "message": event["message"],
+                "username": event["username"]
+            })
+        )
+
+    async def typing_indicator(self, event):
+        # Send typing status to WebSocket
+        await self.send(
+            text_data=json.dumps({
+                "typing": event["typing"],
+                "username": event["username"]
+            })
+        )
+
+    async def notify_online_users(self):
+        try:
+            # Get list of online users (update logic as needed)
+            online_users = [user.username for user in User.objects.filter(is_active=True)]
+
+            # Notify all WebSocket connections in "online_users" group
+            await self.channel_layer.group_send(
+                "online_users",
+                {
+                    "type": "user_presence",
+                    "online_users": online_users,
+                }
+            )
+        except Exception as e:
+            print(f"Error notifying online users: {e}")
+
+    async def user_presence(self, event):
+        # Send online user list to WebSocket
+        await self.send(
+            text_data=json.dumps({
+                "online_users": event["online_users"]
+            })
         )
