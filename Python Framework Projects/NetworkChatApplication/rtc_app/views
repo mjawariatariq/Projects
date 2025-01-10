@@ -1,25 +1,19 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse, HttpResponse
 from .forms import SignupForm
 from .models import Room, Message
 from datetime import timedelta
 from django.utils import timezone
-from django.http import JsonResponse
-from django.http import Http404
+from firebase_admin import messaging
 
-# Home view
 def home(request):
     return render(request, 'home.html')
 
-# Chat room view with session timeout
-
 def chat_room_view(request, room_name):
-    try:
-        room = Room.objects.get(name=room_name)
-    except Room.DoesNotExist:
-        raise Http404("Room does not exist")
-    
+    room = get_object_or_404(Room, name=room_name)
     messages = Message.objects.filter(room=room)
     context = {
         'room': room,
@@ -28,12 +22,10 @@ def chat_room_view(request, room_name):
     }
     return render(request, 'chat_room.html', context)
 
-# Group chat view to list all available rooms
 def group(request):
     rooms = Room.objects.all()
     return render(request, 'group.html', {'rooms': rooms})
 
-# Login view where users can authenticate
 def login_view(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -43,30 +35,70 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('chat_room', room_name='ChatRoom')  # Replace 'ChatRoom' with the desired room name
+            next_url = request.GET.get('next', 'home')  # Default to home if no next URL
+            return redirect(next_url)
         else:
             return render(request, 'login.html', {'error': 'Invalid credentials'})
 
     return render(request, 'login.html')
 
-# Signup view for creating new users
+
 def signup_view(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('login')  # Redirect to login page after successful signup
+            return redirect('login')
     else:
         form = SignupForm()
 
     return render(request, 'signup.html', {'form': form})
 
-# Send message view
+
+
+@login_required
 def send_message(request, room_name):
     if request.method == 'POST':
-        message_content = request.POST.get('message')
-        user = request.user  # Assuming the user is logged in
-        room = Room.objects.get(name=room_name)
-        message = Message.objects.create(room=room, user=user, content=message_content)
-        return JsonResponse({'message': 'Message sent successfully'})
+        content = request.POST.get('message')
+        media = request.FILES.get('media')
+        room = get_object_or_404(Room, name=room_name)
+
+        # Ensure the user is authenticated before proceeding
+        if request.user.is_authenticated:
+            message = Message.objects.create(
+                room=room,
+                user=request.user,  # This ensures the user is a valid authenticated User instance
+                content=content,
+                media=media,
+            )
+            # Return JSON response indicating success
+            return JsonResponse({'status': 'Message sent'})
+        else:
+            # If the user is not authenticated, return an error response
+            return JsonResponse({'error': 'User is not authenticated'}, status=401)
     return JsonResponse({'error': 'Invalid request'}, status=400)
+
+def update_message_status(request, message_id, status):
+    message = get_object_or_404(Message, id=message_id)
+    message.status = status
+    message.save()
+    return JsonResponse({'status': 'updated'})
+
+def send_push_notification(user, title, body):
+    if not hasattr(user, 'device_token') or not user.device_token:
+        return JsonResponse({'error': 'User does not have a device token'}, status=400)
+
+    message = messaging.Message(
+        notification=messaging.Notification(
+            title=title,
+            body=body,
+        ),
+        token=user.device_token,
+    )
+    response = messaging.send(message)
+    return response
+
+def update_user_status(request, status):
+    request.user.is_online = (status == "online")
+    request.user.save()
+    return JsonResponse({'status': 'updated'})
