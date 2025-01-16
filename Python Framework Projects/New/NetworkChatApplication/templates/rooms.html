@@ -1,0 +1,47 @@
+<!-- room.html -->
+
+{% extends 'base.html' %}
+
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'style.css' %}">
+
+
+{% block title %}Room: {{ room_name }}{% endblock %}
+{% block content %}
+{% if user.is_authenticated %}
+<div class="container">
+    <div class="alert alert-info d-flex justify-content-between" role="alert">
+        <h5>ROOM: {{ room_name }}</h5>
+        <a href="/accounts/logout/">
+            <button type="button" class="btn btn-light">Log Out</button>
+        </a>
+    </div>
+    <div id="chatbox" style="padding: 4px 2px; max-height: 300px; overflow-y: scroll;">
+        {% for message in messages %}
+        <div class="chat-message {% if message.user == request.user %}text-right{% else %}text-left{% endif %}">
+            <b>{{ message.user.username }}</b>: {{ message.content }}<br>
+        </div>
+        {% endfor %}
+    </div>
+    <form>
+        <div class="form-group">
+            <input class="form-control" placeholder="Enter message" id="my_input" type="text" required>
+            <br>
+        </div>
+        <input class="btn btn-primary btn-lg btn-block" id="submit_button" type="button" value="Send">
+    </form>
+    <!-- Include the room name as a hidden element -->
+    <div id="room_name" data-room-name="{{ room_name }}"></div>
+</div>
+{% else %}
+<div class="alert alert-info">
+    You are not logged in. <a href="{% url 'login' %}">Log in here</a>
+</div>
+
+<a href="{% url 'login' %}">Log in here</a>
+</div>
+{% endif %}
+{% endblock %}
+
+<script src="{% static 'chat.js' %}"></script>
