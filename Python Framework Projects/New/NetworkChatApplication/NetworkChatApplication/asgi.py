@@ -1,7 +1,7 @@
 import os
 from django.core.asgi import get_asgi_application
  
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'wechatpp.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'rtc_app.settings')
  
 from channels.auth import AuthMiddlewareStack
 from channels.routing import ProtocolTypeRouter , URLRouter
