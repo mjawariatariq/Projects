@@ -10,7 +10,7 @@ def rooms(request):
     rooms=Room.objects.all()
     return render(request, "rooms.html",{"rooms":rooms})
 
-from django.http import Http404
+from django.http import Http404, HttpResponseForbidden
 
 def room(request, slug):
     try:
@@ -20,11 +20,12 @@ def room(request, slug):
     messages = Message.objects.filter(room__slug=slug)
     return render(request, "room.html", {"room_name": room_name, "slug": slug, 'messages': messages})
 
-def user_logout(request):
-    if request.method == "POST":
+def logout_view(request):
+    if request.method == 'POST':
         logout(request)
-        return redirect('login')
-    return redirect('rooms')
+        return redirect('login')  # Redirect to login after logout
+    return HttpResponseForbidden("Invalid method")
+
 
 def room_view(request, room_slug):
     room = Room.objects.get(slug=room_slug)
