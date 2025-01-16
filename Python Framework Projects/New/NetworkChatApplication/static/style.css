@@ -1,0 +1,206 @@
+/* General Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #fafafa;
+    color: #333;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 30px auto;
+}
+
+/* Header */
+.alert-info {
+    background-color: #ff5e57; /* Vibrant Coral */
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+/* Button Styles */
+.btn-light {
+    background-color: #ffdd57; /* Bright Yellow */
+    color: #333;
+    border: 1px solid #ffdd57;
+    border-radius: 30px;
+    padding: 12px 24px;
+    font-size: 16px;
+}
+
+.btn-light:hover {
+    background-color: #ffbb33; /* Darker Yellow */
+    color: #fff;
+}
+
+.btn-primary {
+    background-color: #4caf50; /* Fresh Green */
+    border-color: #4caf50;
+    color: white;
+    border-radius: 30px;
+    padding: 12px 24px;
+}
+
+.btn-primary:hover {
+    background-color: #45a049; /* Darker Green */
+    border-color: #388e3c;
+}
+
+.btn-outline-secondary {
+    background-color: #ff5722; /* Vibrant Orange */
+    color: #fff;
+    border-radius: 30px;
+    padding: 12px 24px;
+    border: 2px solid #ff5722;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #e64a19;
+    border-color: #e64a19;
+}
+
+/* Chatbox */
+#chatbox {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    max-height: 400px;
+    overflow-y: auto;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+}
+
+.chat-message {
+    background-color: #f0f0f0;
+    padding: 10px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    max-width: 70%;
+}
+
+.chat-message b {
+    color: #ff5722;
+}
+
+.text-right {
+    background-color: #e0f7fa; /* Light Cyan */
+    text-align: right;
+}
+
+.text-left {
+    background-color: #f1f8e9; /* Light Green */
+}
+
+/* Input Field */
+.form-control {
+    border-radius: 30px;
+    box-shadow: none;
+    padding: 14px 20px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+}
+
+.form-control:focus {
+    border-color: #ff5722; /* Orange for focus */
+    box-shadow: 0 0 5px rgba(255, 87, 34, 0.5);
+}
+
+/* Room Cards */
+.card {
+    background-color: #fff;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.card-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #ff5e57; /* Coral Red */
+}
+
+.card-text {
+    color: #777;
+    font-size: 16px;
+}
+
+.card-title:hover {
+    color: #e64a19; /* Darker Coral */
+}
+
+.btn-outline-secondary {
+    background-color: #ffeb3b; /* Bright Yellow */
+    color: #333;
+    border-radius: 20px;
+    border: 1px solid #ffeb3b;
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #fbc02d;
+    border-color: #fbc02d;
+}
+
+/* Log In Button */
+.btn-lg {
+    border-radius: 30px;
+    font-size: 16px;
+    padding: 12px 24px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .row {
+        flex-direction: column;
+    }
+
+    .col-sm-4 {
+        margin-bottom: 15px;
+    }
+
+    .card {
+        max-width: 100%;
+    }
+
+    .form-control {
+        width: 100%;
+    }
+}
+
+/* Custom Hover Effects */
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+.card-title:hover {
+    color: #e64a19;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 10px;
+    font-size: 14px;
+    color: #777;
+    background-color: #f8f9fa;
+    margin-top: 30px;
+}
