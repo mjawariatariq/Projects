@@ -32,8 +32,9 @@
         <input class="btn btn-primary btn-lg btn-block" id="submit_button" type="button" value="Send">
     </form>
     <!-- Include the room name as a hidden element -->
-    <div id="room_name" data-room-name="{{ room_name }}"></div>
-</div>
+     <!-- In your Django template (HTML) -->
+<div id="room_name" data-room-name="{{ room_name }}" data-username="{{ request.user.username }}"></div>
+
 {% else %}
 <div class="alert alert-info">
     You are not logged in. <a href="{% url 'login' %}">Log in here</a>
