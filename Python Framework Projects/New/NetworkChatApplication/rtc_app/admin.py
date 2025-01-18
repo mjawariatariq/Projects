@@ -1,6 +1,9 @@
-from django.apps import AppConfig
+# Django ka admin module import kar rahe hain
+from django.contrib import admin
+# Apni models ko import kar rahe hain
+from .models import Room, Message
 
-
-class ChatappConfig(AppConfig):
-    default_auto_field = 'django.db.models.BigAutoField'
-    name = 'rtc_app'
+# Room model ko admin site pe register kar rahe hain
+admin.site.register(Room)
+# Message model ko admin site pe register kar rahe hain
+admin.site.register(Message)
