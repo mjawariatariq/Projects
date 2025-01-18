@@ -1,38 +1,35 @@
-<!-- rooms.html -->
-
-
-% extends 'base.html' %}
-
+{% extends 'base.html' %}
 
 {% load static %}
 <link rel="stylesheet" href="{% static 'style.css' %}">
 
-
 {% block title %}Home{% endblock %}
-
-
 
 {% block content %}
 {% if user.is_authenticated %}
 
   <div class="container">
+    <!-- Agar user authenticated hai to available public rooms dikhana -->
     <div class="alert alert-info d-flex justify-content-between" role="alert">
         <h5>Available Public Rooms</h5>
-        <a href="/accounts/logout/">
-          <button type="button" class="btn btn-light">Click to Log Out</button>
-        </a>
-      </div>
-      
-      
-      {% if rooms %}
+        <form method="post" action="{% url 'logout' %}" style="display: inline;">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-light">Click to Log Out</button>
+        </form>
+    </div>
+    
+    <!-- Agar rooms available hain to unko display karna -->
+    {% if rooms %}
         <div class="row equal">
             {% for room in rooms %}
             
+            <!-- Har ek room ke liye card display karna -->
             <div class="col-sm-4 d-flex pb-3">
                 <div class="card bg-light mb-3" style="max-width: 18rem;">
                     <div class="card-block">
                         <h3 class="card-title">{{room.name}}</h3>
                         <p class="card-text">It is Public group for this Project.</p>
+                        <!-- Room ke page par jane ke liye button -->
                         <a href="/{{room.slug}}" class="btn btn-outline-secondary">Go to Room</a>
                     </div>
                 </div>
@@ -40,32 +37,27 @@
 
             {% endfor %}
 
-            
         </div>
     {% else %}
-            No Rooms Available!
+        <!-- Agar koi room available nahi hai to message dikhana -->
+        No Rooms Available!
     {% endif %}
-</div>
-
-
+  </div>
 
 {% else %}
+<!-- Agar user authenticated nahi hai to logout ka option dikhana -->
 <div class="container">
     <div class="alert alert-info d-flex justify-content-between" role="alert">
         <h5>You are not logged in</h5>
-        <a href="/accounts/logout/">
-          <button type="button" class="btn btn-light"><a href="{% url 'login' %}">Log In</a></button>
-        </a>
-      </div>
+        <form method="post" action="{% url 'logout' %}" style="display: inline;">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-light">Click to Log Out</button>
+        </form>
+    </div>
 </div>  
 {% endif %}
 
 <br/>
-
-    
-
-
-
 
 {% endblock %}
 
