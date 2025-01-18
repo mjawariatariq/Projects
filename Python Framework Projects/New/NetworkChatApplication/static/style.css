@@ -7,97 +7,64 @@
 
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #fafafa;
+    background-color: #f4f7fc; /* Light blue-gray for a soft background */
     color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
 }
 
 .container {
-    max-width: 1200px;
-    margin: 30px auto;
+    max-width: 450px;
+    width: 100%;
+    background-color: #ffffff; /* White background for the form */
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    text-align: center;
 }
 
-/* Header */
 .alert-info {
-    background-color: #ff5e57; /* Vibrant Coral */
+    background-color: #007bff; /* Blue for professionalism */
     color: #fff;
     font-weight: bold;
     text-align: center;
     border-radius: 8px;
-    padding: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
 }
 
 /* Button Styles */
 .btn-light {
-    background-color: #ffdd57; /* Bright Yellow */
+    background-color: #fbc02d; /* Bright Yellow */
     color: #333;
-    border: 1px solid #ffdd57;
+    border: 1px solid #fbc02d;
     border-radius: 30px;
     padding: 12px 24px;
     font-size: 16px;
 }
 
 .btn-light:hover {
-    background-color: #ffbb33; /* Darker Yellow */
+    background-color: #fdd835; /* Darker Yellow */
     color: #fff;
 }
 
 .btn-primary {
-    background-color: #4caf50; /* Fresh Green */
-    border-color: #4caf50;
+    background-color: #007bff; /* Professional blue */
+    border-color: #007bff;
     color: white;
     border-radius: 30px;
-    padding: 12px 24px;
+    padding: 14px 24px;
+    font-size: 16px;
+    width: 100%;
+    text-transform: uppercase;
 }
 
 .btn-primary:hover {
-    background-color: #45a049; /* Darker Green */
-    border-color: #388e3c;
-}
-
-.btn-outline-secondary {
-    background-color: #ff5722; /* Vibrant Orange */
-    color: #fff;
-    border-radius: 30px;
-    padding: 12px 24px;
-    border: 2px solid #ff5722;
-}
-
-.btn-outline-secondary:hover {
-    background-color: #e64a19;
-    border-color: #e64a19;
-}
-
-/* Chatbox */
-#chatbox {
-    background-color: #fff;
-    padding: 15px;
-    border-radius: 8px;
-    max-height: 400px;
-    overflow-y: auto;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    margin-bottom: 15px;
-    border: 1px solid #ddd;
-}
-
-.chat-message {
-    background-color: #f0f0f0;
-    padding: 10px;
-    margin-bottom: 8px;
-    border-radius: 8px;
-    max-width: 70%;
-}
-
-.chat-message b {
-    color: #ff5722;
-}
-
-.text-right {
-    background-color: #e0f7fa; /* Light Cyan */
-    text-align: right;
-}
-
-.text-left {
-    background-color: #f1f8e9; /* Light Green */
+    background-color: #0056b3; /* Darker Blue */
+    border-color: #0056b3;
 }
 
 /* Input Field */
@@ -107,92 +74,21 @@ body {
     padding: 14px 20px;
     font-size: 16px;
     border: 1px solid #ccc;
-    background-color: #fff;
-}
-
-.form-control:focus {
-    border-color: #ff5722; /* Orange for focus */
-    box-shadow: 0 0 5px rgba(255, 87, 34, 0.5);
-}
-
-/* Room Cards */
-.card {
-    background-color: #fff;
-    border: none;
-    border-radius: 15px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
     margin-bottom: 20px;
 }
 
-.card-body {
-    padding: 20px;
-}
-
-.card-title {
-    font-size: 24px;
-    font-weight: bold;
-    color: #ff5e57; /* Coral Red */
-}
-
-.card-text {
-    color: #777;
-    font-size: 16px;
-}
-
-.card-title:hover {
-    color: #e64a19; /* Darker Coral */
-}
-
-.btn-outline-secondary {
-    background-color: #ffeb3b; /* Bright Yellow */
-    color: #333;
-    border-radius: 20px;
-    border: 1px solid #ffeb3b;
-    width: 100%;
-    padding: 12px;
-    font-size: 16px;
-}
-
-.btn-outline-secondary:hover {
-    background-color: #fbc02d;
-    border-color: #fbc02d;
-}
-
-/* Log In Button */
-.btn-lg {
-    border-radius: 30px;
-    font-size: 16px;
-    padding: 12px 24px;
+.form-control:focus {
+    border-color: #007bff; /* Focus color in blue */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .row {
-        flex-direction: column;
+    .container {
+        padding: 30px;
+        width: 90%;
     }
-
-    .col-sm-4 {
-        margin-bottom: 15px;
-    }
-
-    .card {
-        max-width: 100%;
-    }
-
-    .form-control {
-        width: 100%;
-    }
-}
-
-/* Custom Hover Effects */
-.card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease-in-out;
-}
-
-.card-title:hover {
-    color: #e64a19;
 }
 
 /* Footer */
