@@ -1,4 +1,5 @@
 
+
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -48,20 +49,17 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
+
+LOGIN_URL = "/login/"  # Forces the login page to appear when user is not authenticated
+LOGIN_REDIRECT_URL = '/rooms/'  # After login, redirect to the rooms page
+LOGOUT_REDIRECT_URL = '/login/'  # After logout, redirect to the login page
 
 ROOT_URLCONF = 'NetworkChatApplication.urls'
 
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/accounts/login/"
-LOGOUT_REDIRECT_URL = '/login/'  # Redirect to the login page after logout
-
-
-# Static files settings
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'static',]
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-
 
 TEMPLATES = [
     {
@@ -79,7 +77,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'NetworkChatApplication.wsgi.application'
+WSGI_APPLICATION = 'wechatpp.wsgi.application'
 
 
 
@@ -127,7 +125,10 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
-# settings.py
+
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR / 'static',]
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 
 # Default primary key field type
