@@ -1,7 +1,17 @@
+
+"""
+WSGI config for wechatpp project.
+
+It exposes the WSGI callable as a module-level variable named ``application``.
+
+For more information on this file, see
+https://docs.djangoproject.com/en/4.2/howto/deployment/wsgi/
+"""
+
 import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'rtc_app.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'NetworkChatApplication.settings')
 
 application = get_wsgi_application()
