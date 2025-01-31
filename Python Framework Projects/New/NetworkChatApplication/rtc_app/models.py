@@ -1,29 +1,28 @@
-# Django ka models module aur User model ko import kar rahe hain
 from django.db import models
 from django.contrib.auth.models import User
 
-# Room model define kar rahe hain
+# Room model
 class Room(models.Model):
-    # Room ka naam define kar rahe hain, max length 20 characters
+    # Room name with a maximum length of 20 characters
     name = models.CharField(max_length=20)
-    # Room ka slug define kar rahe hain, max length 100 characters
-    slug = models.SlugField(max_length=100)
+    # Room slug with a maximum length of 100 characters
+    slug = models.SlugField(max_length=100, unique=True)
 
-    # String representation define kar rahe hain
+    # String representation of the Room model
     def __str__(self):
-        return "Room : "+ self.name + " | Id : " + self.slug
+        return f"Room: {self.name} | Slug: {self.slug}"
 
-# Message model define kar rahe hain
+# Message model
 class Message(models.Model):
-    # Message ke liye user ko foreign key se connect kar rahe hain
+    # ForeignKey to User model
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    # Message ka content text field mein store ho ga
+    # Message content stored as text
     content = models.TextField()
-    # Message ko kis room mein bheja gaya hai, room ko foreign key se connect kar rahe hain
+    # ForeignKey to Room model
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
-    # Message kab create hua, ye auto generate hoga jab message create ho ga
+    # Timestamp for when the message was created
     created_on = models.DateTimeField(auto_now_add=True)
 
-    # String representation define kar rahe hain
+    # String representation of the Message model
     def __str__(self):
-        return "Message is :- "+ self.content
+        return f"Message by {self.user.username}: {self.content}"
