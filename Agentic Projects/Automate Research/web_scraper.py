@@ -56,3 +56,34 @@ def scrape_websites(query, sites):
             continue
             
     return results
+
+
+# ==================================================================================
+
+import requests
+from bs4 import BeautifulSoup
+
+def scrape_websites(query, sites):
+    results = []
+    keywords = query.lower().split()  # Break topic into words
+
+    for site in sites:
+        try:
+            response = requests.get(site, timeout=10)
+            if response.status_code != 200:
+                continue
+
+            soup = BeautifulSoup(response.text, "html.parser")
+            text = soup.get_text(separator=' ', strip=True)
+
+            # ✅ Only keep pages that contain at least one keyword from query
+            if any(keyword in text.lower() for keyword in keywords):
+                results.append({
+                    "url": site,
+                    "text": text
+                })
+
+        except Exception as e:
+            print(f"❌ Failed to scrape {site}: {e}")
+
+    return results
