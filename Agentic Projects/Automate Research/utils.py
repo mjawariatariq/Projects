@@ -1,7 +1,9 @@
+
+
 import requests
 
 # ✅ Groq API key — recommended to move this to .env in production
-API_KEY = "Grok api key likho "
+API_KEY = "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"
 API_URL = "https://api.groq.com/openai/v1/chat/completions"
 MODEL_NAME = "meta-llama/llama-4-scout-17b-16e-instruct"
 
