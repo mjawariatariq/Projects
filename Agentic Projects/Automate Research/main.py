@@ -1,55 +1,58 @@
+
 import streamlit as st
+from datetime import date
 from agent import run_agentic_research
 from fpdf import FPDF
 import base64
 import unicodedata
 from utils import generate_section
 
-# --- NEW: Concise and professional section generation ---
+# Set page configuration
+st.set_page_config(page_title="📘 Agentic Research Assistant", layout="centered")
+
+# Page title and subtitle
+st.markdown("<h1 style='text-align: center;'>📘 Agentic Research Assistant</h1>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center; color: grey;'>Your AI-powered academic report generator</p>", unsafe_allow_html=True)
+st.markdown("---")
+
+# --- Clean Text Utility ---
+def clean_text(text):
+    text = unicodedata.normalize('NFKD', text)
+    return text.replace("’", "'").replace("“", '"').replace("”", '"').encode("latin-1", "ignore").decode("latin-1")
+
+# --- Section Header ---
+st.markdown("### ✍️ Report Information")
+with st.container():
+    col1, col2 = st.columns(2)
+    with col1:
+        title = st.text_input("Report Title", "The Role of AI in Education")
+        author = st.text_input("Author", "Ms. Jawaria Tariq")
+    with col2:
+        institution = st.text_input("Institution", "Virtual University")
+        date_value = st.date_input("Report Date", value=date.today())
+
+    subtitle = st.text_input("Subtitle (optional)", "Trends, Opportunities and Concerns in 2024")
+
+# --- Research Topic Section ---
+st.markdown("### 🔍 Research Topic")
+query = st.text_area("Enter your research topic here:", "How is artificial intelligence innovation creating ethical challenges in 2024?")
+
+# --- Generate Sections using Gemini or LLaMA backend ---
 def generate_detailed_sections_from_summary(summary):
     section_prompts = {
         "Abstract": f"Summarize this report into a clear, concise academic abstract (max 4-5 sentences):\n\n{summary}",
         "Introduction": f"Write a brief and clear Introduction (no more than 2 short paragraph) explaining the purpose of the report:\n\n{summary}",
-        "Methodology": f"Write a short Methodology section (under 200 words) explaining the approach used, without repeating the summary:\n\n{summary}",
-        "Findings / Results": f"Write 3-5 concise bullet points summarizing the main findings or results from this summary:\n\n{summary}",
-        "Discussion / Analysis": f"Write a brief, professional Discussion (max 150 words) based on the key issues raised in the report:\n\n{summary}",
-        "Conclusion": f"Write a short conclusion (2-3 sentences max) summarizing the key insight or takeaway of this report:\n\n{summary}"
+        "Methodology": f"Write a short Methodology section (under 200 words) explaining the approach used:\n\n{summary}",
+        "Findings / Results": f"Write 3-5 concise bullet points summarizing the main findings or results:\n\n{summary}",
+        "Discussion / Analysis": f"Write a professional Discussion (max 150 words) based on key issues:\n\n{summary}",
+        "Conclusion": f"Write a short conclusion (2-3 sentences max):\n\n{summary}",
     }
-
-    generated_sections = {}
+    output = {}
     for section, prompt in section_prompts.items():
-        try:
-            response = generate_section(prompt)
-            generated_sections[section] = response.strip()
-        except Exception as e:
-            generated_sections[section] = f"⚠️ Error generating {section}: {e}"
+        output[section] = generate_section(prompt)
+    return output
 
-    return generated_sections
-
-# ------------------- Session State Initialization -------------------
-for key in ["report", "sources", "abstract", "introduction", "methodology", "findings_results", "discussion_analysis", "conclusion"]:
-    if key not in st.session_state:
-        st.session_state[key] = "" if key != "sources" else []
-
-# ------------------- Streamlit UI Layout -------------------
-st.set_page_config(page_title="Agentic Research Assistant", layout="centered")
-st.title("Agentic Research Assistant")
-st.subheader("Your AI-powered academic report generator")
-
-title = st.text_input("Report Title", "Report on AI Innovation and Ethics")
-subtitle = st.text_input("Subtitle (optional)", "Recent Advances in Artificial Intelligence: Trends, Challenges, and Applications")
-author = st.text_input("Author Name", "Ms. Jawaria Tariq")
-institution = st.text_input("Institution / Organization", "Virtual University")
-date = st.date_input("Report Date")
-query = st.text_area("Topic", "Machine Learning, AI")
-
-# ------------------- Unicode Cleaner -------------------
-def clean_text(text):
-    text = unicodedata.normalize('NFKD', text)
-    text = text.replace('’', "'").replace('“', '"').replace('”', '"')
-    return text.encode('latin-1', 'ignore').decode('latin-1')
-
-# ------------------- PDF Generator -------------------
+# --- PDF Generation ---
 class PDF(FPDF):
     def header(self):
         if self.page_no() > 2:
@@ -72,17 +75,12 @@ def generate_full_report_pdf(metadata, sections, sources, filename="formatted_re
     # Cover Page
     pdf.add_page()
     pdf.set_font("Arial", "B", 24)
-    pdf.set_text_color(0)
     pdf.cell(0, 15, clean_text(metadata["title"]), ln=True, align="C")
-
     if metadata.get("subtitle"):
         pdf.set_font("Arial", "I", 14)
-        pdf.set_text_color(80)
         pdf.cell(0, 10, clean_text(metadata["subtitle"]), ln=True, align="C")
-
     pdf.ln(30)
     pdf.set_font("Arial", "", 12)
-    pdf.set_text_color(50)
     pdf.cell(0, 10, f"Author: {clean_text(metadata['author'])}", ln=True, align="C")
     pdf.cell(0, 10, f"Institution: {clean_text(metadata['institution'])}", ln=True, align="C")
     pdf.cell(0, 10, f"Date: {clean_text(metadata['date'])}", ln=True, align="C")
@@ -90,43 +88,33 @@ def generate_full_report_pdf(metadata, sections, sources, filename="formatted_re
     # Table of Contents
     pdf.add_page()
     pdf.set_font("Arial", "B", 18)
-    pdf.set_text_color(0)
     pdf.cell(0, 10, "Table of Contents", ln=True)
     pdf.ln(5)
     pdf.set_font("Arial", "", 12)
-    toc_items = list(sections.keys()) + ["References"]
-    for i, item in enumerate(toc_items, start=1):
+    for i, item in enumerate(list(sections.keys()) + ["References"], 1):
         pdf.cell(0, 8, f"{i}. {clean_text(item)}", ln=True)
 
-    # Content Sections
+    # Content
     pdf.add_page()
-    for i, (heading, content) in enumerate(sections.items()):
+    for section, content in sections.items():
         pdf.set_font("Arial", "B", 13)
-        pdf.set_text_color(0)
-        pdf.cell(0, 10, clean_text(heading), ln=True)
-        pdf.set_draw_color(150)
+        pdf.cell(0, 10, clean_text(section), ln=True)
         pdf.line(10, pdf.get_y(), 200, pdf.get_y())
         pdf.ln(4)
-
         pdf.set_font("Arial", "", 11)
-        pdf.set_text_color(40)
         for para in clean_text(content).split("\n\n"):
             pdf.multi_cell(0, 9, para)
             pdf.ln(1)
-
         pdf.ln(2)
 
     # References
     if sources:
         pdf.ln(8)
         pdf.set_font("Arial", "B", 13)
-        pdf.set_text_color(0)
         pdf.cell(0, 10, "References", ln=True)
         pdf.line(10, pdf.get_y(), 200, pdf.get_y())
         pdf.ln(4)
-
         pdf.set_font("Arial", "", 10)
-        pdf.set_text_color(40)
         for i, url in enumerate(sources, 1):
             pdf.multi_cell(0, 8, f"{i}. {clean_text(url)}")
             pdf.ln(1)
@@ -134,36 +122,36 @@ def generate_full_report_pdf(metadata, sections, sources, filename="formatted_re
     pdf.output(filename)
     return filename
 
-# ------------------- Run Research & Generate Sections -------------------
-if st.button("Start Research"):
+# --- Session Storage ---
+for key in ["report", "sources", "abstract", "introduction", "methodology", "findings_results", "discussion_analysis", "conclusion"]:
+    if key not in st.session_state:
+        st.session_state[key] = "" if key != "sources" else []
+
+# --- Button to run research ---
+if st.button("🚀 Start Research"):
     with st.spinner("Running agentic research..."):
         result = run_agentic_research(query)
         st.session_state.report = result["summary"]
         st.session_state.sources = result["sources"]
+        generated = generate_detailed_sections_from_summary(st.session_state.report)
+        st.session_state.abstract = generated["Abstract"]
+        st.session_state.introduction = generated["Introduction"]
+        st.session_state.methodology = generated["Methodology"]
+        st.session_state.findings_results = generated["Findings / Results"]
+        st.session_state.discussion_analysis = generated["Discussion / Analysis"]
+        st.session_state.conclusion = generated["Conclusion"]
+        st.success("✅ Research completed!")
 
-        detailed_sections = generate_detailed_sections_from_summary(st.session_state.report)
-
-        st.session_state.abstract = detailed_sections.get("Abstract", "")
-        st.session_state.introduction = detailed_sections.get("Introduction", "")
-        st.session_state.methodology = detailed_sections.get("Methodology", "")
-        st.session_state.findings_results = detailed_sections.get("Findings / Results", "")
-        st.session_state.discussion_analysis = detailed_sections.get("Discussion / Analysis", "")
-        st.session_state.conclusion = detailed_sections.get("Conclusion", "")
-
-        st.success("Research completed! You can now download your formatted report.")
-        st.markdown(st.session_state.report, unsafe_allow_html=True)
-
-# ------------------- Download Button -------------------
+# --- Download Button ---
 if st.session_state.report and st.session_state.sources:
-    if st.button("Download Formatted Report"):
+    if st.button("📄 Download Formatted Report as PDF"):
         metadata = {
             "title": title,
             "subtitle": subtitle,
             "author": author,
             "institution": institution,
-            "date": str(date)
+            "date": str(date_value)
         }
-
         sections = {
             "Abstract": st.session_state.abstract,
             "Introduction": st.session_state.introduction,
@@ -172,15 +160,19 @@ if st.session_state.report and st.session_state.sources:
             "Discussion / Analysis": st.session_state.discussion_analysis,
             "Conclusion": st.session_state.conclusion
         }
+        file_path = generate_full_report_pdf(metadata, sections, st.session_state.sources)
+        with open(file_path, "rb") as f:
+            pdf_bytes = f.read()
+        b64 = base64.b64encode(pdf_bytes).decode()
+        st.markdown(f'<a href="data:application/octet-stream;base64,{b64}" download="Formatted_Report.pdf">📥 Click here to download your PDF</a>', unsafe_allow_html=True)
 
-        pdf_path = generate_full_report_pdf(metadata, sections, st.session_state.sources)
-        with open(pdf_path, "rb") as f:
-            base64_pdf = base64.b64encode(f.read()).decode("utf-8")
-        download_link = f'<a href="data:application/octet-stream;base64,{base64_pdf}" download="Formatted_Report.pdf">Click here to download your PDF</a>'
-        st.markdown(download_link, unsafe_allow_html=True)
-
-# ------------------- Display Sources -------------------
+# --- Display Sources Section ---
 if st.session_state.sources:
-    st.subheader("Sources")
-    for i, source in enumerate(st.session_state.sources, 1):
-        st.markdown(f"{i}. [{source}]({source})")
+    st.markdown("### 🔗 Sources")
+    for i, src in enumerate(st.session_state.sources, 1):
+        st.markdown(f"{i}. [{src}]({src})")
+# --- Footer ---
+st.markdown("---")  
+st.markdown("<p style='text-align: center; color: grey;'>Powered by Agentic Research Assistant</p>", unsafe_allow_html=True)
+
+
