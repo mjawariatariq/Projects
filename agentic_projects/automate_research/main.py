@@ -35,7 +35,9 @@ with st.container():
 
 # --- Research Topic Section ---
 st.markdown("### 🔍 Research Topic")
-query = st.text_area("Enter your research topic here:", "How is artificial intelligence innovation creating ethical challenges in 2024?")
+query = st.text_input("Enter your research topic or question", "Impact of AI on student learning outcomes")
+
+
 
 # --- Generate Sections using Gemini or LLaMA backend ---
 def generate_detailed_sections_from_summary(summary):
@@ -128,9 +130,20 @@ for key in ["report", "sources", "abstract", "introduction", "methodology", "fin
         st.session_state[key] = "" if key != "sources" else []
 
 # --- Button to run research ---
+# if st.button("🚀 Start Research"):
+#     with st.spinner("Running agentic research..."):
+#         result = run_agentic_research(query)
 if st.button("🚀 Start Research"):
     with st.spinner("Running agentic research..."):
         result = run_agentic_research(query)
+
+        if not result or not result.get("summary") or not result.get("sources"):
+            st.error("❌ No relevant topics found on any authentic websites.")
+            st.info("💡 Try a simpler or broader topic like:\n- Climate change\n- Impact of water pollution\n- AI in education")
+        else:
+            st.session_state.report = result["summary"]
+            st.session_state.sources = result["sources"]
+            
         st.session_state.report = result["summary"]
         st.session_state.sources = result["sources"]
         generated = generate_detailed_sections_from_summary(st.session_state.report)
@@ -141,6 +154,10 @@ if st.button("🚀 Start Research"):
         st.session_state.discussion_analysis = generated["Discussion / Analysis"]
         st.session_state.conclusion = generated["Conclusion"]
         st.success("✅ Research completed!")
+        
+# agr research nahi hoti to show krwao ke topics not found in any authentic websites
+# --- Display Report Sections ---
+        
 
 # --- Download Button ---
 if st.session_state.report and st.session_state.sources:
