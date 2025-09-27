@@ -1,0 +1,1 @@
+# Stores configuration variables (e.g., DB connection strings, API keys, model paths).

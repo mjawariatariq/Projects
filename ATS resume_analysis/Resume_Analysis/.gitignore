@@ -1,0 +1,3 @@
+# Excludes unwanted files/folders (e.g., __pycache__, .env, .vscode, etc.) from version control.
+
+.env
