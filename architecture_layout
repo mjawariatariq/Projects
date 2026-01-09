@@ -1,0 +1,96 @@
+# architectural_layout.py
+import matplotlib.pyplot as plt
+from matplotlib.patches import Rectangle, Arc, Circle
+
+print("\n" + "="*40)
+print("   ARCHITECTURAL MASTER PLAN ENGINE")
+print("="*40)
+beds = int(input("Bedrooms: "))
+kitchens = int(input("Kitchens: "))
+living_rooms = int(input("Living Rooms: "))
+garages = int(input("Garages: "))
+baths = int(input("Attached Baths: "))
+area = float(input("Total Area (Sq. Ft): "))
+
+# ---------- PLOT SETTINGS ----------
+fig, ax = plt.subplots(figsize=(15, 11), facecolor='#FDFDFD')
+WALL_COLOR = "#1C2833"
+FURNITURE_COLOR = "#5D6D7E"
+
+def draw_structure(name, x, y, w, h, color, has_bath=False):
+    # 1. Main Room Fill
+    ax.add_patch(Rectangle((x, y), w, h, facecolor=color, alpha=0.12))
+    # 2. Outer Thick Walls
+    ax.add_patch(Rectangle((x, y), w, h, linewidth=4.5, edgecolor=WALL_COLOR, facecolor='none'))
+    
+    # 3. Label & Dimensions
+    ax.text(x + w/2, y + h/2 + 0.4, name.upper(), ha="center", weight="bold", fontsize=10)
+    ax.text(x + w/2, y + h/2 - 0.2, f"{int(w*4)}'x{int(h*4)}'", ha="center", fontsize=8, alpha=0.7)
+
+    # 4. Windows (Glazed Blue)
+    if y + h >= 11.8: # North Windows
+        ax.plot([x+w*0.2, x+w*0.8], [y+h, y+h], color='#3498DB', linewidth=6)
+    if x <= 0.2: # West Windows
+        ax.plot([x, x], [y+h*0.2, y+h*0.8], color='#3498DB', linewidth=6)
+
+    # 5. Furniture Symbols
+    if "BEDROOM" in name.upper():
+        ax.add_patch(Rectangle((x+0.8, y+h-2.2), 2, 1.8, facecolor=FURNITURE_COLOR, alpha=0.4)) # Bed
+        ax.add_patch(Rectangle((x+1, y+h-0.7), 0.6, 0.3, facecolor='white')) # Pillow
+    elif "LIVING" in name.upper():
+        ax.add_patch(Rectangle((x+1, y+1), 4, 1, facecolor=FURNITURE_COLOR, alpha=0.4)) # Sofa
+        ax.add_patch(Circle((x+3, y+3), 0.6, facecolor='#BDC3C7')) # Table
+    elif "KITCHEN" in name.upper():
+        ax.add_patch(Rectangle((x, y+h-1), w, 1, facecolor='#ABB2B9', alpha=0.6)) # Counter
+
+    # 6. Attached Bathroom
+    if has_bath:
+        bx, by, bw, bh = x + w - 1.8, y + 0.2, 1.6, 1.8
+        ax.add_patch(Rectangle((bx, by), bw, bh, facecolor='#FADBD8', alpha=0.4, edgecolor=WALL_COLOR, linewidth=2))
+        ax.text(bx+bw/2, by+bh/2, "BATH", fontsize=7, ha='center', weight='bold')
+
+# ---------- GRID COMPOSITION (THE BOX) ----------
+# Har cheez aik hi 16x12 rectangle ke andar hai
+
+# Row 1: Top (Bedrooms)
+bed_w = 12 / beds if beds > 0 else 4
+for i in range(beds):
+    draw_structure("Bedroom", 4 + (i*bed_w), 8.5, bed_w, 3.5, "#D6EAF8", has_bath=True)
+
+# Row 2: Middle (Living & Kitchen)
+draw_structure("Kitchen", 0.2, 4.5, 3.8, 7.5, "#FCF3CF")
+draw_structure("Living Area", 4, 4.5, 8, 4, "#D5F5E3")
+
+# Row 3: Bottom (Garage & Entry)
+draw_structure("Garage", 0.2, 0.5, 7.8, 4, "#EBEDEF")
+draw_structure("Main Hallway", 8, 0.5, 4, 4, "#F4F6F7")
+draw_structure("Guest/Entry", 12, 0.5, 3.8, 11.5, "#E5E8E8")
+
+# ---------- DOORS & SWINGS ----------
+def draw_door(x, y, angle=90):
+    ax.add_patch(Arc((x, y), 1.2, 1.2, theta1=0, theta2=angle, color="brown", linewidth=3))
+
+draw_door(8, 4.5)  # Entry to Living
+draw_door(4, 7)    # Kitchen to Living
+draw_door(12, 9)   # Hall to Top Bedroom
+
+# ---------- ARCHITECTURAL FINISHES ----------
+ax.set_xlim(0, 16.5)
+ax.set_ylim(0, 12.5)
+ax.set_aspect("equal")
+ax.axis("off")
+
+
+
+# Title & Technical Info
+plt.suptitle("FULL ARCHITECTURAL MASTER SPECIFICATION", fontsize=18, weight='bold', y=0.96)
+plt.title(f"Property Reference: AI-GEN-1200 | Net Area: {area} Sq. Ft. | Scale 1:50", fontsize=10, color='#566573')
+
+# Professional Stamp / Signature Box
+ax.add_patch(Rectangle((13, 1), 3, 2, facecolor='none', edgecolor='#AEB6BF'))
+ax.text(14.5, 2.5, "APPROVED by Jawaria", color='darkred', weight='bold', ha='center', fontsize=12, alpha=0.3)
+ax.text(13.2, 1.2, "Date: 2024-05\nSheet: A-101", fontsize=7)
+
+plt.tight_layout(rect=[0, 0.03, 1, 0.95])
+print("\n🎨 Full Professional Design Ready! Ab ye bilkul real architectural blueprint lag raha hai.")
+plt.show()
